@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.base.mapper.BaseTunnelMapper">
+    
+    <resultMap type="BaseTunnel" id="BaseTunnelResult">
+        <result property="tunnelId"    column="tunnel_id"    />
+        <result property="tunnelName"    column="tunnel_name"    />
+        <result property="tunnelPosition"    column="tunnel_position"    />
+        <result property="startSign"    column="start_sign"    />
+        <result property="tunnelLength"    column="tunnel_length"    />
+        <result property="tunnelDetail"    column="tunnel_detail"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectBaseTunnelVo">
+        select tunnel_id, tunnel_name, tunnel_position, start_sign, tunnel_length, tunnel_detail, status, create_by, create_time, update_by, update_time, remark from base_tunnel
+    </sql>
+
+    <select id="selectBaseTunnelList" parameterType="BaseTunnel" resultMap="BaseTunnelResult">
+        <include refid="selectBaseTunnelVo"/>
+        <where>
+          status = '1'
+          <if test="tunnelName != null and tunnelName != ''">
+              and tunnel_name = #{tunnel_name}
+          </if>
+        </where>
+    </select>
+    
+    <select id="selectBaseTunnelById" parameterType="Long" resultMap="BaseTunnelResult">
+        <include refid="selectBaseTunnelVo"/>
+        where tunnel_id = #{tunnelId}
+    </select>
+        
+    <insert id="insertBaseTunnel" parameterType="BaseTunnel">
+        insert into base_tunnel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tunnelId != null">tunnel_id,</if>
+            <if test="tunnelName != null">tunnel_name,</if>
+            <if test="tunnelPosition != null">tunnel_position,</if>
+            <if test="startSign != null">start_sign,</if>
+            <if test="tunnelLength != null">tunnel_length,</if>
+            <if test="tunnelDetail != null">tunnel_detail,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tunnelId != null">#{tunnelId},</if>
+            <if test="tunnelName != null">#{tunnelName},</if>
+            <if test="tunnelPosition != null">#{tunnelPosition},</if>
+            <if test="startSign != null">#{startSign},</if>
+            <if test="tunnelLength != null">#{tunnelLength},</if>
+            <if test="tunnelDetail != null">#{tunnelDetail},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBaseTunnel" parameterType="BaseTunnel">
+        update base_tunnel
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tunnelName != null">tunnel_name = #{tunnelName},</if>
+            <if test="tunnelPosition != null">tunnel_position = #{tunnelPosition},</if>
+            <if test="startSign != null">start_sign = #{startSign},</if>
+            <if test="tunnelLength != null">tunnel_length = #{tunnelLength},</if>
+            <if test="tunnelDetail != null">tunnel_detail = #{tunnelDetail},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where tunnel_id = #{tunnelId}
+    </update>
+
+    <update id="deleteBaseTunnelById" parameterType="BaseTunnel">
+        update base_tunnel set status = '0',update_by = #{updateBy}, update_time = #{updateTime} where tunnel_id = #{tunnelId}
+    </update>
+
+    <delete id="deleteBaseTunnelByIds" parameterType="String">
+        delete from base_tunnel where tunnel_id in 
+        <foreach item="tunnelId" collection="array" open="(" separator="," close=")">
+            #{tunnelId}
+        </foreach>
+    </delete>
+</mapper>

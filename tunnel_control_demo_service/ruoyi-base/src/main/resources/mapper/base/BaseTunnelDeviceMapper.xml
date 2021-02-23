@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.base.mapper.BaseTunnelDeviceMapper">
+    
+    <resultMap type="BaseTunnelDevice" id="BaseTunnelDeviceResult">
+        <result property="deviceId"    column="device_id"    />
+        <result property="deviceTypeId"    column="device_type_id"    />
+        <result property="deviceCode"    column="device_code"    />
+        <result property="deviceGroup"    column="device_group"    />
+        <result property="workStatus"    column="work_status"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectBaseTunnelDeviceVo">
+        select device_id, device_type_id, device_code, device_group, work_status, status, create_by, create_time, update_by, update_time, remark from base_tunnel_device
+    </sql>
+
+    <select id="selectBaseTunnelDeviceList" parameterType="BaseTunnelDevice" resultMap="BaseTunnelDeviceResult">
+        <include refid="selectBaseTunnelDeviceVo"/>
+        <where>
+          status = '1'
+          <if test="deviceTypeId != null">
+              and device_type_id = #{deviceTypeId}
+          </if>
+        </where>
+    </select>
+    
+    <select id="selectBaseTunnelDeviceById" parameterType="Long" resultMap="BaseTunnelDeviceResult">
+        <include refid="selectBaseTunnelDeviceVo"/>
+        where device_id = #{deviceId}
+    </select>
+        
+    <insert id="insertBaseTunnelDevice" parameterType="BaseTunnelDevice">
+        insert into base_tunnel_device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">device_id,</if>
+            <if test="deviceTypeId != null">device_type_id,</if>
+            <if test="deviceCode != null">device_code,</if>
+            <if test="deviceGroup != null">device_group,</if>
+            <if test="workStatus != null">work_status,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">#{deviceId},</if>
+            <if test="deviceTypeId != null">#{deviceTypeId},</if>
+            <if test="deviceCode != null">#{deviceCode},</if>
+            <if test="deviceGroup != null">#{deviceGroup},</if>
+            <if test="workStatus != null">#{workStatus},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBaseTunnelDevice" parameterType="BaseTunnelDevice">
+        update base_tunnel_device
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceTypeId != null">device_type_id = #{deviceTypeId},</if>
+            <if test="deviceCode != null">device_code = #{deviceCode},</if>
+            <if test="deviceGroup != null">device_group = #{deviceGroup},</if>
+            <if test="workStatus != null">work_status = #{workStatus},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where device_id = #{deviceId}
+    </update>
+
+    <delete id="deleteBaseTunnelDeviceById" parameterType="Long">
+        delete from base_tunnel_device where device_id = #{deviceId}
+    </delete>
+
+    <delete id="deleteBaseTunnelDeviceByIds" parameterType="String">
+        delete from base_tunnel_device where device_id in 
+        <foreach item="deviceId" collection="array" open="(" separator="," close=")">
+            #{deviceId}
+        </foreach>
+    </delete>
+</mapper>

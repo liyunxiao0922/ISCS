@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.base.mapper.BaseTunnelDeviceTypeMapper">
+
+    <resultMap type="BaseTunnelDeviceType" id="BaseTunnelDeviceTypeResult">
+        <result property="deviceTypeId"    column="device_type_id"    />
+        <result property="tunnelId"    column="tunnel_id"    />
+        <result property="deviceTypeCode"    column="device_type_code"    />
+        <result property="deviceSpace"    column="device_space"    />
+        <result property="deviceTypeName"    column="device_type_name"    />
+        <result property="deviceImageAddress"    column="device_image_address"    />
+        <result property="startPosition"    column="start_position"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+
+    <sql id="selectBaseTunnelDeviceTypeVo">
+        select device_type_id, tunnel_id, device_type_code, device_space, device_type_name, device_image_address, start_position, create_time, update_by, update_time, remark, status, create_by from base_tunnel_device_type
+    </sql>
+
+    <resultMap type="com.ruoyi.base.domain.BaseDeviceTypePageRes" id="pageTunnelDeviceTypeResult">
+        <result property="deviceTypeId"    column="device_type_id"    />
+        <result property="tunnelId"    column="tunnel_id"    />
+        <result property="deviceTypeCode"    column="device_type_code"    />
+        <result property="deviceSpace"    column="device_space"    />
+        <result property="deviceTypeName"    column="device_type_name"    />
+        <result property="deviceImageAddress"    column="device_image_address"    />
+        <result property="startPosition"    column="start_position"    />
+        <result property="dictLabel"    column="dict_label"    />
+    </resultMap>
+
+    <select id="selectBaseTunnelDeviceTypeList" parameterType="BaseTunnelDeviceType" resultMap="pageTunnelDeviceTypeResult">
+        select device_type_id, tunnel_id, device_type_code, device_space, device_type_name, device_image_address, start_position,dd.dict_label from base_tunnel_device_type
+            tdt inner join sys_dict_data dd on tdt.device_type_code = dd.dict_value and dd.dict_type = 'tunnel_device_type'
+        <where>
+            tdt.status = '1'
+            <if test="tunnelId != null">
+                and tunnel_id = #{tunnelId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBaseTunnelDeviceTypeById" parameterType="Long" resultMap="BaseTunnelDeviceTypeResult">
+        <include refid="selectBaseTunnelDeviceTypeVo"/>
+        where device_type_id = #{deviceTypeId}
+    </select>
+
+    <insert id="insertBaseTunnelDeviceType" parameterType="BaseTunnelDeviceType">
+        insert into base_tunnel_device_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceTypeId != null">device_type_id,</if>
+            <if test="tunnelId != null">tunnel_id,</if>
+            <if test="deviceTypeCode != null">device_type_code,</if>
+            <if test="deviceSpace != null">device_space,</if>
+            <if test="deviceTypeName != null">device_type_name,</if>
+            <if test="deviceImageAddress != null">device_image_address,</if>
+            <if test="startPosition != null">start_position,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceTypeId != null">#{deviceTypeId},</if>
+            <if test="tunnelId != null">#{tunnelId},</if>
+            <if test="deviceTypeCode != null">#{deviceTypeCode},</if>
+            <if test="deviceSpace != null">#{deviceSpace},</if>
+            <if test="deviceTypeName != null">#{deviceTypeName},</if>
+            <if test="deviceImageAddress != null">#{deviceImageAddress},</if>
+            <if test="startPosition != null">#{startPosition},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBaseTunnelDeviceType" parameterType="BaseTunnelDeviceType">
+        update base_tunnel_device_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tunnelId != null">tunnel_id = #{tunnelId},</if>
+            <if test="deviceTypeCode != null">device_type_code = #{deviceTypeCode},</if>
+            <if test="deviceSpace != null">device_space = #{deviceSpace},</if>
+            <if test="deviceTypeName != null">device_type_name = #{deviceTypeName},</if>
+            <if test="deviceImageAddress != null">device_image_address = #{deviceImageAddress},</if>
+            <if test="startPosition != null">start_position = #{startPosition},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+        </trim>
+        where device_type_id = #{deviceTypeId}
+    </update>
+
+
+    <update id="deleteBaseTunnelDeviceTypeById" parameterType="Long">
+        update base_tunnel_device_type set status = '0' where device_type_id = #{deviceTypeId} and status = '1'
+    </update>
+
+    <delete id="deleteBaseTunnelDeviceTypeByIds" parameterType="String">
+        delete from base_tunnel_device_type where device_type_id in
+        <foreach item="deviceTypeId" collection="array" open="(" separator="," close=")">
+            #{deviceTypeId}
+        </foreach>
+    </delete>
+
+
+    <select id="queryTypeAndSubByDeviceIds" parameterType="java.util.List" resultMap="TunnelDeviceTypeCollection">
+        SELECT
+            tdt.device_type_id,
+            tdt.tunnel_id,
+            tdt.device_type_code,
+            tdt.device_space,
+            tdt.device_type_name,
+            tdt.device_image_address,
+            tdt.start_position,
+            td.device_id,
+            td.device_type_id,
+            td.device_code,
+            td.device_group,
+            td.work_status,
+            dti.image_address
+        FROM
+            base_tunnel_device_type tdt
+            INNER JOIN base_tunnel_device td ON tdt.device_type_id = td.device_type_id
+            INNER JOIN base_device_status_icon dti ON td.work_status = dti.icon_code
+        WHERE
+            tdt.`status` = '1'
+            AND td.`status` = '1'
+            and tdt.device_type_id in
+            <foreach collection="deviceTypeIds" item="deviceTypeId" open="(" close=")" separator=",">
+                #{deviceTypeId}
+            </foreach>
+    </select>
+
+    <resultMap type="com.ruoyi.base.domain.TunnelDeviceTypeCollection" id="TunnelDeviceTypeCollection">
+        <result property="deviceTypeId"    column="device_type_id"    />
+        <result property="tunnelId"    column="tunnel_id"    />
+        <result property="deviceTypeCode"    column="device_type_code"    />
+        <result property="deviceSpace"    column="device_space"    />
+        <result property="deviceTypeName"    column="device_type_name"    />
+        <result property="deviceImageAddress"    column="device_image_address"    />
+        <result property="startPosition"    column="start_position"    />
+
+        <collection property="tunnelDeviceList" resultMap="BaseTunnelDeviceSimpleResult"/>
+    </resultMap>
+
+    <resultMap type="com.ruoyi.base.domain.BaseTunnelDeviceSimple" id="BaseTunnelDeviceSimpleResult">
+        <result property="deviceId"    column="device_id"    />
+        <result property="deviceTypeId"    column="device_type_id"    />
+        <result property="deviceCode"    column="device_code"    />
+        <result property="deviceGroup"    column="device_group"    />
+        <result property="workStatus"    column="work_status"    />
+        <result property="imageAddress"    column="image_address"    />
+    </resultMap>
+
+
+</mapper>

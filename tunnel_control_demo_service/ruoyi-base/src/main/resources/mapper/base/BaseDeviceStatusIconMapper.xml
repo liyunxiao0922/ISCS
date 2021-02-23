@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.base.mapper.BaseDeviceStatusIconMapper">
+    
+    <resultMap type="BaseDeviceStatusIcon" id="BaseDeviceStatusIconResult">
+        <result property="statusIconId"    column="status_icon_id"    />
+        <result property="deviceTypeId"    column="device_type_id"    />
+        <result property="imageAddress"    column="image_address"    />
+        <result property="iconCode"    column="icon_code"    />
+        <result property="iconDescription"    column="icon_description"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectBaseDeviceStatusIconVo">
+        select status_icon_id, device_type_id, image_address, icon_code, icon_description, status, create_by, create_time, update_by, update_time, remark from base_device_status_icon
+    </sql>
+
+    <select id="selectBaseDeviceStatusIconList" parameterType="BaseDeviceStatusIcon" resultMap="BaseDeviceStatusIconResult">
+        <include refid="selectBaseDeviceStatusIconVo"/>
+        <where>
+          status = '1'
+          <if test="deviceTypeId != null">
+              and device_type_id = #{deviceTypeId}
+          </if>
+        </where>
+    </select>
+    
+    <select id="selectBaseDeviceStatusIconById" parameterType="Long" resultMap="BaseDeviceStatusIconResult">
+        <include refid="selectBaseDeviceStatusIconVo"/>
+        where status_icon_id = #{statusIconId}
+    </select>
+        
+    <insert id="insertBaseDeviceStatusIcon" parameterType="BaseDeviceStatusIcon">
+        insert into base_device_status_icon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="statusIconId != null">status_icon_id,</if>
+            <if test="deviceTypeId != null">device_type_id,</if>
+            <if test="imageAddress != null">image_address,</if>
+            <if test="iconCode != null">icon_code,</if>
+            <if test="iconDescription != null">icon_description,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="statusIconId != null">#{statusIconId},</if>
+            <if test="deviceTypeId != null">#{deviceTypeId},</if>
+            <if test="imageAddress != null">#{imageAddress},</if>
+            <if test="iconCode != null">#{iconCode},</if>
+            <if test="iconDescription != null">#{iconDescription},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBaseDeviceStatusIcon" parameterType="BaseDeviceStatusIcon">
+        update base_device_status_icon
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceTypeId != null">device_type_id = #{deviceTypeId},</if>
+            <if test="imageAddress != null">image_address = #{imageAddress},</if>
+            <if test="iconCode != null">icon_code = #{iconCode},</if>
+            <if test="iconDescription != null">icon_description = #{iconDescription},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where status_icon_id = #{statusIconId}
+    </update>
+
+    <update id="deleteBaseDeviceStatusIconById" parameterType="Long">
+        update base_device_status_icon set status = '0' where status_icon_id = #{statusIconId} and status = '1'
+    </update>
+
+    <delete id="deleteBaseDeviceStatusIconByIds" parameterType="String">
+        delete from base_device_status_icon where status_icon_id in 
+        <foreach item="statusIconId" collection="array" open="(" separator="," close=")">
+            #{statusIconId}
+        </foreach>
+    </delete>
+
+    <select id="queryLastCode" resultType="java.lang.String">
+        select icon_code from base_device_status_icon order by icon_code desc limit 1
+    </select>
+
+    <select id="queryFirstIconAdd" parameterType="java.lang.Long" resultMap="BaseDeviceStatusIconResult">
+        select * from base_device_status_icon where device_type_id = #{deviceTypeId} and status = '1' order by icon_code asc limit 1
+    </select>
+
+
+
+</mapper>
