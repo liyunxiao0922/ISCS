@@ -14,7 +14,7 @@ export function getAccident(accidentId) {
   return request({
     url: '/event/accident/' + accidentId,
     method: 'get'
-  })
+  }) 
 }
 
 // 新增【请填写功能名称】
@@ -49,5 +49,22 @@ export function exportAccident(query) {
     url: '/event/accident/export',
     method: 'get',
     params: query
+  })
+}
+
+// 上传图片
+export function upImg(query) {
+  return request({
+    url: '/common/upload',
+    method: 'post',
+    data: query
+  })
+}
+
+export function eventPush(data) {
+  return request({
+    url: '/event/accident/push',
+    method: 'post',
+    data: data
   })
 }

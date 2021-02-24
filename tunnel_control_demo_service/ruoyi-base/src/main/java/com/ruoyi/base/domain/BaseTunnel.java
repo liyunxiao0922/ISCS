@@ -1,5 +1,6 @@
 package com.ruoyi.base.domain;
 
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -17,30 +18,32 @@ public class BaseTunnel extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 隧道id */
-    @ApiParam("隧道id")
+    @ApiModelProperty(notes = "隧道id")
     private Long tunnelId;
 
     /** 隧道名字 */
     @ApiParam("隧道名字")
+    @ApiModelProperty(notes = "隧道名字")
     private String tunnelName;
 
     /** 隧道位置 */
-    @ApiParam("隧道位置")
+    @ApiModelProperty(notes = "隧道位置")
     private String tunnelPosition;
 
     /** 起始标志 */
-    @ApiParam("起始标志")
+    @ApiModelProperty(notes = "起始标志")
     private String startSign;
 
     /** 隧道长度 */
-    @ApiParam("隧道长度")
+    @ApiModelProperty(notes = "隧道长度")
     private String tunnelLength;
 
     /** 隧道详情 */
-    @ApiParam("隧道详情")
+    @ApiModelProperty(notes = "隧道详情")
     private String tunnelDetail;
 
     /** 隧道状态 */
+    @ApiModelProperty(notes = "隧道状态")
     private String status;
 
     public void setTunnelId(Long tunnelId) 

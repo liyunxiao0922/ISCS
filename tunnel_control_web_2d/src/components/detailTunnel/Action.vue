@@ -90,6 +90,9 @@ export default {
 .actionBox /deep/ .el-input__inner {
   background-color: transparent;
   border-color: #19292e;
+  box-shadow:inset 0px 0px 15px 1px #75A6AC;
+  border-radius: 0;
+  color: #b2faff;
 }
 </style>
 <style lang="scss" scoped>

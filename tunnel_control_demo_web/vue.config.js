@@ -28,7 +28,7 @@ module.exports = {
   productionSourceMap: false,
   // webpack-dev-server 相关配置
   devServer: {
-    host: '127.0.0.1',
+    host: '192.168.3.20',
     port: `8080`,
     open: true,
     /* proxy: {

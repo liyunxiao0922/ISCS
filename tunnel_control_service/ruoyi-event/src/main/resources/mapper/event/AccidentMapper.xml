@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.mapper.AccidentMapper">
+
+	<resultMap type="com.ruoyi.domain.Accident" id="AccidentResult">
+		<result property="accidentId" column="accident_id" />
+		<result property="accidentType" column="accident_type" />
+		<result property="location" column="location" />
+		<result property="direction" column="direction" />
+		<result property="stakeNumber" column="stake_number" />
+		<result property="roadConditions" column="road_conditions" />
+		<result property="level" column="level" />
+		<result property="phoneNum" column="phone_num" />
+		<result property="message" column="message" />
+	</resultMap>
+
+	<sql id="selectAccidentVo">
+		select accident_id, accident_type, location, direction, stake_number,
+		road_conditions, level, phone_num, message from event_accident
+	</sql>
+
+	<select id="selectAccidentList" parameterType="Accident"
+		resultMap="AccidentResult">
+		<include refid="selectAccidentVo" />
+		<where>
+			<if test="accidentType != null "> and accident_type = #{accidentType}</if>
+			<if test="location != null  and location != ''"> and location = #{location}</if>
+			<if test="direction != null  and direction != ''"> and direction = #{direction}</if>
+			<if test="stakeNumber != null "> and stake_number = #{stakeNumber}</if>
+			<if test="roadConditions != null  and roadConditions != ''"> and road_conditions = #{roadConditions}</if>
+			<if test="level != null  and level != ''"> and level = #{level}</if>
+			<if test="phoneNum != null "> and phone_num = #{phoneNum}</if>
+			<if test="message != null  and message != ''"> and message = #{message}</if>
+		</where>
+	</select>
+
+	<select id="selectAccidentById" parameterType="Long"
+		resultMap="AccidentResult">
+		<include refid="selectAccidentVo" />
+		where accident_id = #{accidentId}
+	</select>
+
+	<insert id="insertAccident" parameterType="Accident" keyColumn="accident_id" keyProperty="accidentId" useGeneratedKeys="true">
+		insert into event_accident
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="accidentId != null">accident_id,</if>
+			<if test="accidentType != null">accident_type,</if>
+			<if test="location != null">location,</if>
+			<if test="direction != null and direction != ''">direction,</if>
+			<if test="stakeNumber != null">stake_number,</if>
+			<if test="roadConditions != null">road_conditions,</if>
+			<if test="level != null">level,</if>
+			<if test="phoneNum != null">phone_num,</if>
+			<if test="message != null">message,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="accidentId != null">#{accidentId},</if>
+			<if test="accidentType != null">#{accidentType},</if>
+			<if test="location != null">#{location},</if>
+			<if test="direction != null and direction != ''">#{direction},</if>
+			<if test="stakeNumber != null">#{stakeNumber},</if>
+			<if test="roadConditions != null">#{roadConditions},</if>
+			<if test="level != null">#{level},</if>
+			<if test="phoneNum != null">#{phoneNum},</if>
+			<if test="message != null">#{message},</if>
+		</trim>
+	</insert>
+
+	<update id="updateAccident" parameterType="Accident">
+		update event_accident
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="accidentType != null">accident_type = #{accidentType},</if>
+			<if test="location != null">location = #{location},</if>
+			<if test="direction != null and direction != ''">direction = #{direction},</if>
+			<if test="stakeNumber != null">stake_number = #{stakeNumber},</if>
+			<if test="roadConditions != null">road_conditions = #{roadConditions},</if>
+			<if test="level != null">level = #{level},</if>
+			<if test="phoneNum != null">phone_num = #{phoneNum},</if>
+			<if test="message != null">message = #{message},</if>
+		</trim>
+		where accident_id = #{accidentId}
+	</update>
+
+	<delete id="deleteAccidentById" parameterType="Long">
+		delete from event_accident where accident_id = #{accidentId}
+	</delete>
+
+	<delete id="deleteAccidentByIds" parameterType="String">
+		delete from event_accident where accident_id in
+		<foreach item="accidentId" collection="array" open="("
+			separator="," close=")">
+			#{accidentId}
+		</foreach>
+	</delete>
+</mapper>

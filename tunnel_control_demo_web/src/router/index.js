@@ -124,6 +124,12 @@ export const constantRoutes = [
         meta: { title: '事件上报' },
       },
       {
+        path: 'eventPush',
+        component: (resolve) => require(['@/views/eventPush'], resolve),
+        name: 'eventPush',
+        meta: { title: '事件推送' },
+      },
+      {
         path: 'eventLog',
         component: (resolve) => require(['@/views/eventLog'], resolve),
         name: 'eventLog',

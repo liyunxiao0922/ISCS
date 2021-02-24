@@ -51,3 +51,12 @@ export function exportLog(query) {
     params: query
   })
 }
+
+// 上传图片
+export function upImg(query) {
+  return request({
+    url: '/common/upload',
+    method: 'post',
+    data: query
+  })
+}

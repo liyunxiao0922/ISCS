@@ -66,7 +66,7 @@
       </el-table-column>
       <el-table-column label="设备图片" align="center" prop="deviceTypeCode">
           <template slot-scope="scope">
-              <img style="height: 100px" :src="scope.row.deviceImageAddress" alt="">
+              <img style="height: 30px" :src="scope.row.deviceImageAddress" alt="">
           </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">

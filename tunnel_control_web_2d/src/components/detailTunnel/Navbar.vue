@@ -9,7 +9,8 @@
       v-for="item in devTypeList"
       :key="item.deviceTypeId"
       type="text"
-      class="btnCommon"
+      :class="item.isSelect ? 'active btnCommon' : 'btnCommon'"
+      @click="navClickFn(item)"
     >
       <img :src="item.deviceImageAddress" alt="设备类型icon丢失了" />
       {{ item.dictLabel }}
@@ -47,6 +48,11 @@ export default {
       default: [],
     },
   },
+  methods: {
+    navClickFn(item) {
+      this.$emit("navClickFn", item);
+    },
+  },
 };
 </script>
 
@@ -58,7 +64,7 @@ export default {
   margin: 10px 0;
   vertical-align: middle;
   position: relative;
-  background-color: #06383C;
+  background-color: #06383c;
 }
 .iconCommon {
   display: inline-block;
@@ -84,9 +90,14 @@ export default {
   }
 }
 .btnCommon {
-  padding: 10px 5px !important;
+  padding: 10px !important;
   margin: 0 5px !important;
   color: #fff;
+  &.active {
+    background-color: #182327;
+    border-radius: 30px;
+    overflow: hidden;
+  }
   img {
     width: 25px;
     height: 25px;

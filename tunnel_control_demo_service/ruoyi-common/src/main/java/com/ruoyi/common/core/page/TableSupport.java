@@ -1,6 +1,7 @@
 package com.ruoyi.common.core.page;
 
 import com.ruoyi.common.utils.ServletUtils;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 表格数据处理
@@ -12,11 +13,13 @@ public class TableSupport
     /**
      * 当前记录起始索引
      */
+    @ApiModelProperty(notes = "当前记录起始索引")
     public static final String PAGE_NUM = "pageNum";
 
     /**
      * 每页显示记录数
      */
+    @ApiModelProperty(notes = "每页显示记录数")
     public static final String PAGE_SIZE = "pageSize";
 
     /**

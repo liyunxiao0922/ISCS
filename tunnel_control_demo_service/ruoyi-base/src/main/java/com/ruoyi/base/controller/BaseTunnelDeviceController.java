@@ -31,7 +31,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/baseTunnelDevice")
-@Api("具体设备管理")
+@Api(tags = "具体设备管理")
 public class BaseTunnelDeviceController extends BaseController
 {
     @Autowired

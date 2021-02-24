@@ -34,7 +34,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/baseDeviceType")
-@Api("隧道设备类型管理")
+@Api(tags = "隧道设备类型管理")
 public class BaseTunnelDeviceTypeController extends BaseController
 {
     @Autowired
@@ -131,7 +131,7 @@ public class BaseTunnelDeviceTypeController extends BaseController
      *
      */
     @PreAuthorize("@ss.hasPermi('base:deviceType:queryTypeAndSubByDeviceIds')")
-    @Log(title = "隧道设备类型删除", businessType = BusinessType.OTHER)
+    @Log(title = "根据设备类型id查询全部设备类型详情及全部具体设备全部", businessType = BusinessType.OTHER)
     @PostMapping("/queryTypeAndSubByDeviceIds")
     @ApiOperation("根据设备类型id查询全部设备类型详情及全部具体设备全部")
     public AjaxResult queryTypeAndSubByDeviceIds(@RequestBody List<Long> deviceTypeIds)

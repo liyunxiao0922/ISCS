@@ -1,5 +1,6 @@
 package com.ruoyi.base.domain;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -16,21 +17,27 @@ public class BaseTunnelDevice extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 设备主键id */
+    @ApiModelProperty(notes = "设备主键id")
     private Long deviceId;
 
     /** 设备类型id */
+    @ApiModelProperty(notes = "设备类型id")
     private Long deviceTypeId;
 
     /** 设备具体编码 */
+    @ApiModelProperty(notes = "设备具体编码")
     private String deviceCode;
 
     /** 分组：1，上行，0，下行 */
+    @ApiModelProperty(notes = "工作状态，来源与设备类型状态表 ")
     private String deviceGroup;
 
     /** 工作状态，来源与设备类型状态表 */
+    @ApiModelProperty(notes = "工作状态，来源与设备类型状态表 ")
     private String workStatus;
 
     /** 设备状态，1，正常，0，删除 */
+    @ApiModelProperty(notes = "设备状态，1，正常，0，删除")
     private String status;
 
     public void setDeviceId(Long deviceId) 

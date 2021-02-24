@@ -31,7 +31,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/base/tunnel")
-@Api("隧道管理")
+@Api(tags = "隧道管理")
 public class BaseTunnelController extends BaseController
 {
     @Autowired

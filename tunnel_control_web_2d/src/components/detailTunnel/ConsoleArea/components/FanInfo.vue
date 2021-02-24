@@ -125,7 +125,7 @@ p {
       position: relative;
       .leftBrace {
         width: 4px;
-        height: 100%;
+        height: 100px;
         background-color: #fff;
         position: absolute;
         left: 0;
@@ -151,7 +151,7 @@ p {
           left: 2px;
           top: 0;
           width: 2px;
-          height: 100%;
+          height: 100px;
           background-color: #f00;
           z-index: 1;
         }
@@ -170,7 +170,7 @@ p {
       }
       .rightBrace {
         width: 4px;
-        height: 100%;
+        height: 100px;
         background-color: #fff;
         position: absolute;
         right: 0;
@@ -189,14 +189,14 @@ p {
           height: 10px;
           content: "";
           background-color: #fff;
-          transform: rotate(-32deg) translate(9px, -18px);
+          transform: rotate(-32deg) translate(10px, -20px);
         }
         .line {
           position: absolute;
           left: 0px;
           top: 0;
           width: 2px;
-          height: 100%;
+          height: 100px;
           background-color: #f00;
           z-index: 1;
         }

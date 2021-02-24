@@ -77,10 +77,12 @@ export default {
 <style lang="scss" scoped>
 .devoptionBox {
   margin: 0;
-  padding: 0 10px 10px 10px;
+  padding: 0 10px 10px 20px;
   list-style: none;
+  color: #b2faff;
   .organizationBox {
     line-height: 40px;
+    font-size: 12px;
   }
   .devBox {
     line-height: 40px;

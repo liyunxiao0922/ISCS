@@ -32,7 +32,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/baseStatusIcon")
-@Api("设备类型的图标管理")
+@Api(tags = "设备类型的图标管理")
 @Slf4j
 public class BaseDeviceStatusIconController extends BaseController
 {

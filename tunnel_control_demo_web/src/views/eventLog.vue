@@ -101,7 +101,12 @@
       <el-step :title="item.dictLabel" v-for="item in statusOptions" :key="item.dictValue">
         <template slot="description">
           <span v-for="(item1, index) in logList" :key="index">
-            <span v-if="item1.id == item.dictValue">{{item1.description}}</span>
+            <span v-if="item1.status == item.dictValue">{{item1.description}}
+              <div v-for="(item2, index2) in item1.eventLogFiles" :key="index2">
+                <video width="100%" @error='hidden' controls="controls" :src="item2.uri" />
+                <img width="100%" @error='hidden' :src="item2.uri" />
+              </div>
+            </span>
           </span>
         </template>
       </el-step>
@@ -136,6 +141,20 @@
         <el-form-item label="处理详情" prop="description">
           <el-input v-model="form.description" type="textarea" placeholder="请输入内容" />
         </el-form-item>
+        <el-form-item label="事故资料" label-width="100" prop="deviceCode">
+                <el-upload
+                    class="upload-demo"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :file-list.sync="fileList"
+                    :auto-upload="false"
+                    :on-change="getImg"
+                    :on-remove="getImg"
+                    list-type="picture">
+                    <!-- :limit="1" -->
+                    <el-button size="small" type="primary">点击上传</el-button>
+                    <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+                </el-upload>
+            </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -146,7 +165,8 @@
 </template>
 
 <script>
-import { listLog, getLog, delLog, addLog, updateLog, exportLog } from "@/api/log";
+import { upImg, listLog, getLog, delLog, addLog, updateLog, exportLog } from "@/api/log";
+
 
 export default {
   name: "Log",
@@ -201,7 +221,10 @@ export default {
         description:[
           { required: true, message: "处理详情不能为空", trigger: "blur" }
         ],
-      }
+      },
+      fileList:[],
+      changeFlag: false,
+      imgList: []
     };
   },
   created() {
@@ -211,6 +234,13 @@ export default {
     });
   },
   methods: {
+
+    // 文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用
+    getImg(file, fileList) {
+        this.imgList = fileList;
+        // 用来判断是否删除过图片
+        this.changeFlag = true;
+    },
     /** 查询事件处置节点列表 */
     getList() {
       this.loading = true;
@@ -218,8 +248,9 @@ export default {
         this.logList = response.rows;
         this.total = response.total;
         this.loading = false;
-        this.stepId = this.logList[this.logList.length - 1].id;
+        this.stepId = +this.logList[this.logList.length - 1].status;
         this.form.status = this.stepId + 1 + '';
+        // console.log(this.logList);
       });
     },
     // 处理阶段字典翻译
@@ -238,7 +269,8 @@ export default {
         accidentId: this.$route.query.id,
         description: null,
         createTime: null,
-        status: this.stepId + 1 + ''
+        status: this.stepId + 1 + '',
+        eventLogFiles: []
       })
       /* this.form = {
         id: null,
@@ -280,25 +312,46 @@ export default {
         this.title = "修改事件处置节点";
       });
     },
+    hidden(e) {
+      console.log(e.target.style.display = 'none');
+    },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateLog(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            addLog(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
+        this.$refs["form"].validate(valid => {
+          if (valid) {
+            /* if (this.form.id != null) {
+              updateLog(this.form).then(response => {
+                this.msgSuccess("修改成功");
+                this.open = false;
+                this.getList();
+              });
+            } else { */
+            if(this.changeFlag) {
+              let imgData = new FormData();
+              imgData.append('file', this.imgList[0].raw);
+              upImg(imgData)
+              .then(res => {
+                this.form.eventLogFiles.push({
+                  uri: res.url,
+                  fileName: this.imgList[0].raw.name
+                })
+                addLog(this.form).then(response => {
+                  this.msgSuccess("新增成功");
+                  this.open = false;
+                  this.getList();
+                });
+              })
+            }else {
+              addLog(this.form).then(response => {
+                this.msgSuccess("新增成功");
+                this.open = false;
+                this.getList();
+              });
+            }
+            /* } */
           }
-        }
-      });
+        });
+      
     },
     /** 删除按钮操作 */
     handleDelete(row) {
@@ -329,7 +382,7 @@ export default {
     }
   },
   watch: {
-    'form.watch': {
+    'logList': {
       handler(to, from) {
         console.log(to, from);
       },

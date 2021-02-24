@@ -1,5 +1,6 @@
 package com.ruoyi.base.domain;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -16,21 +17,27 @@ public class BaseDeviceStatusIcon extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 图标id */
+    @ApiModelProperty(notes = "图标id")
     private Long statusIconId;
 
     /** 设备类型id */
+    @ApiModelProperty(notes = "设备类型id")
     private Long deviceTypeId;
 
     /** 图标地址 */
+    @ApiModelProperty(notes = "图标地址")
     private String imageAddress;
 
     /** 图标code */
+    @ApiModelProperty(notes = "图标code")
     private String iconCode;
 
     /** 图标描述 */
+    @ApiModelProperty(notes = "图标描述")
     private String iconDescription;
 
     /** 1:正常，0，删除 */
+    @ApiModelProperty(notes = "1:正常，0，删除")
     private String status;
 
     public void setStatusIconId(Long statusIconId) 

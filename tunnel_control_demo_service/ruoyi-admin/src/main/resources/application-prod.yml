@@ -1,3 +1,12 @@
+ruoyi:
+    domainName: http://tunnel-device-admin-api.xaxhl.net
+    # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
+    profile: /home/ruoyi/uploadPath
+
+server:
+    # 服务器的HTTP端口，默认为8080
+    port: 8095
+
 # 数据源配置
 spring:
     datasource:
@@ -8,25 +17,8 @@ spring:
         #url: jdbc:mysql://47.104.229.4:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         #url: jdbc:mysql://localhost:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
         username: root
-        # todo 环境替换
-        # password: root
         password: preorder
         druid:
-#            # 主库数据源
-#            master:
-#                # url: jdbc:mysql://127.0.0.1:3306/ry-vue?characterEncoding=utf-8&useSSl=true&serverTimezone=UTC&allowMultiQueries=true
-#                #url: jdbc:mysql://47.104.229.4:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-#                url: jdbc:mysql://localhost:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
-#                username: root
-#                #password: root
-#                password: eSO2jhJkddZhxxCuzumYmP1M
-#            # 从库数据源
-#            slave:
-#                # 从数据源开关/默认关闭
-#                enabled: false
-#                url:
-#                username:
-#                password:
             # 初始连接数
             initialSize: 5
             # 最小连接池数量

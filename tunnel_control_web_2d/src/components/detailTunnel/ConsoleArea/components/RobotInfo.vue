@@ -29,8 +29,9 @@ export default {};
     text-align: center;
     line-height: 115px;
     font-size: 60px;
+    border-right: 1px solid #f00;
     &>img{
-        width: 100%;
+        width: 90%;
     }
   }
   .robotinfo {
@@ -39,6 +40,7 @@ export default {};
     list-style: none;
     font-size: 12px;
     width: 49%;
+    color: #b2faff;
     & > li {
       border: 1px solid #384B4F;
       padding: 3px 5px;

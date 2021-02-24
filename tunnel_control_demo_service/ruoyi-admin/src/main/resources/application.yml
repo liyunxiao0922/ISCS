@@ -8,46 +8,19 @@ ruoyi:
   copyrightYear: 2021
   # 实例演示开关
   demoEnabled: true
-  # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  # todo  环境替换
-  # profile: C:/ruoyi/uploadPath
-  profile: /home/ruoyi/uploadPath
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数组计算 char 字符验证
   captchaType: math
-  domainName: http://tunnel-device-admin-api.xaxhl.net
-
-# 开发环境配置
-server:
-  # 服务器的HTTP端口，默认为8080
-  port: 8081
-  # port: 8095
-  servlet:
-    # 应用的访问路径
-    context-path: /
-  tomcat:
-    # tomcat的URI编码
-    uri-encoding: UTF-8
-    # tomcat最大线程数，默认为200
-    max-threads: 800
-    # Tomcat启动初始化的线程数，默认值25
-    min-spare-threads: 30
-
-# 日志配置
-logging:
-  level:
-    com.ruoyi: debug
-    org.springframework: warn
 
 # Spring配置
 spring:
+  profiles:
+    active: dev
   # 资源信息
   messages:
     # 国际化资源文件路径
     basename: i18n/messages
-  profiles: 
-    active: druid
   # 文件上传
   servlet:
      multipart:
@@ -62,8 +35,6 @@ spring:
       enabled: true
   # redis 配置
   redis:
-    # todo 地址
-    #host: localhost
     host: 127.0.0.1
     # 端口，默认为6379
     port: 6379
@@ -116,7 +87,7 @@ swagger:
   # 是否开启swagger
   enabled: true
   # 请求前缀
-  pathMapping: /dev-api
+  pathMapping: /
 
 # 防止XSS攻击
 xss: 
@@ -126,3 +97,22 @@ xss:
   excludes: /system/notice/*
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# 开发环境配置
+server:
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
+
+# 日志配置
+logging:
+  level:
+    com.ruoyi: debug
+    org.springframework: warn
