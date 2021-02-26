@@ -22,7 +22,6 @@ export default {
   },
   methods: {
     click() {
-      console.log(screenfull.enabled)
       if (!screenfull.enabled) {
         this.$message({
           message: '全屏展示出问题了',

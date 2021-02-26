@@ -3,19 +3,17 @@
     <Navbar :devTypeList="devTypeList" @navClickFn="navClickFn" />
     <Action :tunnelList="tunnelList" @changeTunnel="changeTunnel" />
     <div class="drawingBoardBox" v-if="tunnelInfo">
-      <DrawingBoard :tunnelInfo="tunnelInfo" :devObj="devObj" :currentStakeNum="currentStakeNum"/>
-      <!-- 前隧道口 -->
-      <div class="tunnelEntrance entrance" v-if="scaleCurrent == 1">
-        <img src="./assets/img/entrance.png" alt="隧道口icon丢失了" />
-      </div>
-      <!-- 后隧道口 -->
-      <div class="tunnelEntrance export" v-if="scaleTotal === scaleCurrent">
-        <img src="./assets/img/export.png" alt="隧道结尾icon丢失了" />
-      </div>
+      <DrawingBoard
+        :tunnelInfo="tunnelInfo"
+        :devObj="devObj"
+        :currentStakeNum="currentStakeNum"
+        :scaleData="scaleData"
+      />
     </div>
-    <div class="scaleBox">
-      <Scale v-if="scaleData" :scaleData="scaleData" />
-    </div>
+    <!-- <div style="width: 100%;height: 650px;">
+      <iframe src="http://tunnel-three.xaxhl.net/" frameborder="0" width="100%" height="100%"></iframe>
+    </div> -->
+
     <div class="consoleAreaBox">
       <ConsoleArea />
     </div>
@@ -51,11 +49,9 @@ export default {
       devTypeList: [], // 设备类型集合
       devTypeIdList: [], // 设备类型id集合
       devInfoList: [], // 设备所有数据集合，未处理
-      scaleTotal: 1, // 总层级
-      scaleCurrent: 1, // 当前层级
       devObj: {}, // 设备所有数据集合，处理完成
       scaleData: null, // 刻度尺数据
-      currentStakeNum: null,// 当前桩号
+      currentStakeNum: null, // 当前桩号
     };
   },
   watch: {
@@ -100,6 +96,9 @@ export default {
           anemoclinograph: {
             ...obj,
           }, // 风速风向仪
+          passageway: {
+            ...obj,
+          }, // 车行通道
         };
         if (this.devTypeIdList && this.devTypeIdList.length) {
           this.getDevListInfo();
@@ -114,7 +113,6 @@ export default {
       deep: true,
       handler(newValue = []) {
         let devObj = this.devObj;
-        console.log(newValue);
         newValue.forEach((element) => {
           let obj = {
             isShow: true,
@@ -151,6 +149,9 @@ export default {
             case "120":
               devObj.informationBoard = obj;
               break;
+            case "121":
+              devObj.passageway = obj;
+              break;
             default:
               console.log("有新设备加入，请重新开发" + obj);
               break;
@@ -178,9 +179,12 @@ export default {
       getTunnelInfo({ tunnelId: this.tunnelId })
         .then((response) => {
           this.tunnelInfo = response.data;
-          this.scaleTotal = Math.ceil((this.tunnelInfo.tunnelLength - 0) / 100);
           this.currentStakeNum = response.data.startSign;
-          this.scaleData = this.scaleDataCreate(response.data.startSign) ?? [];
+          this.scaleData =
+            this.scaleDataCreate(
+              response.data.startSign,
+              response.data.tunnelLength
+            ) ?? [];
         })
         .catch((error) => {
           console.log(error);
@@ -190,9 +194,6 @@ export default {
     getDevTypeList() {
       getDevTypeList({ tunnelId: this.tunnelId })
         .then((response) => {
-          // this.devTypeList = response.data.filter(
-          //   (item) => item.deviceTypeCode != 121
-          // );
           this.devTypeList = response.data.map((item) => ({
             ...item,
             isSelect: true,
@@ -219,16 +220,18 @@ export default {
       this.getDevTypeList();
     },
     // 刻度尺数据生成
-    scaleDataCreate(startValue) {
-      if (startValue) {
+    scaleDataCreate(startValue, tunnelLength) {
+      if (startValue && tunnelLength) {
         let newValue = startValue.replace("k", "");
         let arr = newValue.split("+");
+        // 倍数，5米显示1刻度，多了一个起始，所以加一
+        let multiple = tunnelLength / 5 + 1;
         if ((arr.length = 2)) {
           let kNum = arr[0];
           let vNum = arr[1] || 0;
           let returnArr = [];
           let vNumIndex = false;
-          for (let index = 0; index < 20; index++) {
+          for (let index = 0; index < multiple; index++) {
             let str = "";
             // 如果第一次进来，赋值初始值
             if (index == 0) {
@@ -287,37 +290,12 @@ export default {
   background-color: #000;
   position: relative;
   .drawingBoardBox {
-    height: 600px;
+    height: 690px;
     width: 100%;
     position: fixed;
     left: 0;
     top: 50%;
     margin-top: -400px;
-    .tunnelEntrance {
-      position: absolute;
-      top: 35px;
-      height: 529px;
-      width: 350px;
-      opacity: 0.5;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-      &.entrance {
-        left: 0;
-      }
-      &.export {
-        right: 0;
-      }
-    }
-  }
-  .scaleBox {
-    position: fixed;
-    left: 0;
-    bottom: 200px;
-    height: 50px;
-    width: 100%;
-    padding: 0 220px 0 220px;
   }
   .consoleAreaBox {
     position: fixed;

@@ -42,7 +42,6 @@ const actions = {
   login({
     commit
   }, userInfo) {
-    console.log(123)
     commit('SET_TOKEN', 'admin-token')
     setToken("admin-token")
     // const { username, password } = userInfo
