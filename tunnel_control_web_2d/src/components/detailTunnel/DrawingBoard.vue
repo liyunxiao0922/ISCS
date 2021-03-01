@@ -38,22 +38,46 @@
           <!-- 隧道风机 -->
           <div class="itemBox tunnelFanUpBox">
             <div
-              class="tunnelFanItem"
+              :class="
+                item.workStatus === '0011'
+                  ? 'tunnelFanItem stop'
+                  : item.workStatus === '0000'
+                  ? 'tunnelFanItem positive'
+                  : 'tunnelFanItem reverse'
+              "
               v-for="(item, index) in devObj.tunnelFan.upList"
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.tunnelFan, index) }"
+              @click="fanClick(item)"
             >
-              <img :src="item.imageAddress" alt="隧道风机icon丢了" />
+              <img
+                v-if="item.workStatus === '0011'"
+                src="./assets/img/fanStop.png"
+                alt="隧道风机icon丢了"
+              />
+              <img v-else :src="item.imageAddress" alt="隧道风机icon丢了" />
             </div>
           </div>
           <div class="itemBox tunnelFanDownBox">
             <div
-              class="tunnelFanItem"
+              :class="
+                item.workStatus === '0011'
+                  ? 'tunnelFanItem stop'
+                  : item.workStatus === '0000'
+                  ? 'tunnelFanItem positive'
+                  : 'tunnelFanItem reverse'
+              "
               v-for="(item, index) in devObj.tunnelFan.downList"
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.tunnelFan, index) }"
+              @click="fanClick(item)"
             >
-              <img :src="item.imageAddress" alt="隧道风机icon丢了" />
+              <img
+                v-if="item.workStatus === '0011'"
+                src="./assets/img/fanStop.png"
+                alt="隧道风机icon丢了"
+              />
+              <img v-else :src="item.imageAddress" alt="隧道风机icon丢了" />
             </div>
           </div>
           <!-- 灯光 -->
@@ -63,8 +87,14 @@
               v-for="(item, index) in devObj.lighting.upList"
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.lighting, index) }"
+              @click="lightingClick(item)"
             >
-              <img :src="item.imageAddress" alt="灯光icon丢了" />
+              <img
+                v-if="item.workStatus === '0009'"
+                src="./assets/img/dengstop.png"
+                alt="隧道风机icon丢了"
+              />
+              <img v-else :src="item.imageAddress" alt="灯光icon丢了" />
             </div>
           </div>
           <div class="itemBox lightingDownBox">
@@ -73,8 +103,14 @@
               v-for="(item, index) in devObj.lighting.downList"
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.lighting, index) }"
+              @click="lightingClick(item)"
             >
-              <img :src="item.imageAddress" alt="灯光icon丢了" />
+              <img
+                v-if="item.workStatus === '0009'"
+                src="./assets/img/dengstop.png"
+                alt="隧道风机icon丢了"
+              />
+              <img v-else :src="item.imageAddress" alt="灯光icon丢了" />
             </div>
           </div>
           <!-- 信号灯 -->
@@ -306,8 +342,12 @@
       <div class="mask">
         <div class="robotBottom" ref="robotBottom"></div>
       </div>
+
       <div class="scrollBtn" ref="scrollBtn">
-        <div class="scrollBtnMask"></div>
+        <div class="scrollBtnMask">
+          <span class="scrollContext">{{ scrollContextValue }}米</span>
+        </div>
+        <div class="tooltipBox">{{ scrollContextValue }}米</div>
       </div>
       <div class="robotTop" ref="robotTop"></div>
     </div>
@@ -344,6 +384,7 @@ export default {
       robotIntelBottom: null, // 下边的机器人
       devRatio: 17, // 默认比例  1米===**px
       tunnelLengthPx: 0, // 计算出来的隧道在页面长度
+      scrollContextValue: 0, // 滚动条当前所在位置对应距离
     };
   },
   mounted() {
@@ -484,7 +525,8 @@ export default {
         main_drawingContext = this.$refs.main_drawingContext,
         mainContext = this.$refs.mainContext,
         scrollBox = this.$refs.scrollBox,
-        scrollBtn = this.$refs.scrollBtn;
+        scrollBtn = this.$refs.scrollBtn,
+        that = this;
       let tunnelLength = this.tunnelInfo.tunnelLength - 0;
       let mainContextWidth = tunnelLength * this.devRatio;
       let main_drawingContextWidth = mainContextWidth + 440;
@@ -506,15 +548,15 @@ export default {
           var nowX = e.clientX;
           var x = nowX - spaceX;
           var baWidth = parseInt(scrollBox.offsetWidth - scrollBtn.offsetWidth);
-
           x = x < 0 ? (x = 0) : x;
           x = x > baWidth ? baWidth : x;
-
           var conWidth = parseInt(
             main_drawingContextWidth - main_drawingBox.offsetWidth
           );
-
           var conX = (x * conWidth) / baWidth;
+          that.scrollContextValue = parseInt(
+            ((that.tunnelInfo.tunnelLength - 0) / baWidth) * x
+          );
           scrollBtn.style.left = x + "px";
           main_drawingContext.style.marginLeft = -conX + "px";
         };
@@ -529,407 +571,23 @@ export default {
     parkingLeft(index) {
       return this.devRatio * index * 700 + "px";
     },
+    /**
+     * 风机控制操作
+     */
+    fanClick(item) {
+      this.$emit("fanClick", item);
+    },
+    /**
+     * 风机控制操作
+     */
+    lightingClick(item) {
+      this.$emit("lightingClick", item);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.main_drawingBox {
-  width: 100%;
-  height: 690px;
-  overflow: hidden;
-  .main_drawingContext {
-    display: flex;
-    width: 20440px;
-    height: 100%;
-    position: relative;
-    .tunnelBackgroundBorder_imgBox {
-      width: 220px;
-      height: 600px;
-      margin-top: 25px;
-      flex-shrink: 0;
-      & > img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .mainContext {
-      width: 20000px;
-      margin-top: 25px;
-      height: 600px;
-      position: relative;
-      flex-shrink: 0;
-      .background_imgBox {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        z-index: -1;
-        & > img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-      .mainOptionBox {
-        width: 100%;
-        height: 600px;
-        position: relative;
-        .itemBox {
-          position: absolute;
-          left: 0;
-          width: 100%;
-          // display: flex;
-          // justify-content: space-around;
-          // 车行通道
-          &.passagewayBox {
-            top: 259px;
-            .passagewayItem {
-              width: 50px;
-              height: 80px;
-              position: absolute;
-              top: 0;
-              img {
-                width: 100%;
-                height: 100%;
-              }
-            }
-          }
-          // 情报板
-          .informationBoardItem {
-            width: 50px;
-            height: 200px;
-            position: absolute;
-            top: 0;
-            background-color: #497785;
-            padding: 5px;
-            .informationContext {
-              width: 100%;
-              height: 100%;
-              background-color: #2f5b68;
-              box-shadow: inset 0 0 7px 1px #152e35;
-              writing-mode: tb-rl;
-              text-align: center;
-              line-height: 40px;
-              color: #e99c21;
-              font-size: 18px;
-              font-weight: bold;
-            }
-          }
-          &.informationBoardUpBox {
-            top: 50px;
-          }
-          &.informationBoardDownBox {
-            top: 350px;
-          }
-          // 车道指示器
-          .laneIndicatorItem {
-            width: 36px;
-            height: 20px;
-            position: absolute;
-            top: 0;
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-          &.laneIndicatorUpBox {
-            top: 98px;
-          }
-          &.laneIndicatorDownBox {
-            top: 398px;
-            .laneIndicatorItem {
-              transform: rotate(180deg);
-            }
-          }
-          // 隧道风机
-          &.tunnelFanUpBox {
-            top: 120px;
-          }
-          &.tunnelFanDownBox {
-            top: 454px;
-          }
-          .tunnelFanItem {
-            width: 23px;
-            height: 23px;
-            position: absolute;
-            top: 0;
-            animation: rotate 3s linear infinite;
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-          // 灯光
-          &.lightingUpBox {
-            top: 230px;
-          }
-          &.lightingDownBox {
-            top: 354px;
-          }
-          .lightingItem {
-            width: 40px;
-            height: 15px;
-            position: absolute;
-            top: 0;
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-          // 信号灯
-          .signalLampItem {
-            width: 36px;
-            height: 20px;
-            position: absolute;
-            top: 0;
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-          &.signalLampUpBox {
-            top: 50px;
-          }
-          &.signalLampDownBox {
-            top: 527px;
-            .signalLampItem {
-              transform: rotate(180deg);
-            }
-          }
-          // 亮度检测器
-          .brightnessDetectorItem {
-            width: 50px;
-            height: 20px;
-            position: absolute;
-            top: 0;
-            .brightnessDetectorItemContext {
-              display: inline-block;
-              color: #fff;
-              font-size: 10px;
-              margin: 0;
-              width: 30px;
-              margin-left: 5px;
-              line-height: 20px;
-              vertical-align: middle;
-            }
-            img {
-              width: 15px;
-              height: 100%;
-              vertical-align: middle;
-            }
-          }
-          &.brightnessDetectorUpBox {
-            top: 74px;
-          }
-          &.brightnessDetectorDownBox {
-            top: 503px;
-          }
-          // 照度检测器
-          .illuminanceDetectorItem {
-            width: 60px;
-            height: 20px;
-            position: absolute;
-            top: 0;
-            .illuminanceDetectorItemContext {
-              display: inline-block;
-              color: #fff;
-              font-size: 10px;
-              margin: 0;
-              width: 40px;
-              margin-left: 5px;
-              line-height: 1;
-              vertical-align: middle;
-            }
-            img {
-              width: 15px;
-              height: 100%;
-              vertical-align: middle;
-            }
-          }
-          &.illuminanceDetectorUpBox {
-            top: 74px;
-          }
-          &.illuminanceDetectorDownBox {
-            top: 503px;
-          }
-          // 风速风向仪
-          .anemoclinographItem {
-            width: 70px;
-            height: 20px;
-            position: absolute;
-            top: 0;
-            .anemoclinographItemContext {
-              display: inline-block;
-              color: #fff;
-              font-size: 10px;
-              margin: 0;
-              width: 50px;
-              margin-left: 5px;
-              line-height: 20px;
-              vertical-align: middle;
-            }
-            img {
-              width: 15px;
-              height: 100%;
-              vertical-align: middle;
-            }
-          }
-          &.anemoclinographUpBox {
-            top: 74px;
-          }
-          &.anemoclinographDownBox {
-            top: 503px;
-          }
-          // 车辆检测器
-          .vehicleDetectorItem {
-            width: 25px;
-            height: 20px;
-            position: absolute;
-            top: 0;
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-          &.vehicleDetectorUpBox {
-            top: 50px;
-          }
-          &.vehicleDetectorDownBox {
-            top: 527px;
-          }
-          // 机器人
-          .robotItem {
-            width: 120px;
-            height: 30px;
-            position: absolute;
-            top: 0;
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-          &.robotUpBox {
-            top: 68px;
-          }
-          &.robotDownBox {
-            bottom: 100px;
-          }
-          // 临时停车
-          .parkingItem {
-            width: 246px;
-            height: 50px;
-            position: absolute;
-            top: 0;
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-          &.parkingUpBox {
-            top: 0;
-          }
-          &.parkingDownBox {
-            bottom: 52px;
-          }
-        }
-      }
-    }
-    .tunnelEntrance {
-      position: absolute;
-      top: 60px;
-      height: 529px;
-      width: 350px;
-      opacity: 0.5;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-      &.entrance {
-        left: 0;
-      }
-      &.export {
-        right: 0;
-      }
-    }
-    .scaleBox {
-      position: absolute;
-      bottom: 40px;
-      padding: 0 220px;
-      height: 50px;
-      width: 100%;
-    }
-    .scaleTop {
-      position: absolute;
-      top: 0px;
-      padding: 0 220px;
-      height: 50px;
-      width: 100%;
-    }
-  }
-  .scrollBox {
-    height: 20px;
-    width: 100%;
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    border-radius: 20px;
-    background: linear-gradient(to right, #515254 50%, #6c7073 50%);
-    background-size: 30px 100%;
-    .mask {
-      width: 100%;
-      height: 10px;
-      background-color: rgba(255, 255, 255, 0.2);
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      border-bottom-right-radius: 10px;
-      border-bottom-left-radius: 10px;
-      .robotBottom {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 10px;
-        height: 10px;
-        background-color: #f00;
-        border-radius: 50%;
-        z-index: 1;
-      }
-    }
-    .robotTop {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 10px;
-      height: 10px;
-      background-color: #f00;
-      border-radius: 50%;
-      z-index: 1;
-    }
-    .scrollBtn {
-      width: 40px;
-      height: 40px;
-      background-color: rgba(122, 122, 122, 0.2);
-      position: absolute;
-      left: 0;
-      top: -10px;
-      border-radius: 3px;
-      cursor: pointer;
-      .scrollBtnMask {
-        width: 100%;
-        height: 20px;
-        margin: 10px 0;
-        background-color: #3d3f3e;
-      }
-    }
-  }
-}
+// 样式太多了，就把它单独提出去了
+@import "./assets/scss/drawingBoard.scss";
 </style>

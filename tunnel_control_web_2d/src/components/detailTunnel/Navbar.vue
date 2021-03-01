@@ -33,11 +33,54 @@
       群控策略
     </el-button>
     <div class="divider"></div>
-    <el-button type="text" class="btnCommon">
-      <i class="iconCommon search"></i>
-      搜索
-    </el-button>
+    <div class="searchBox">
+      <el-button
+        type="text"
+        class="btnCommon"
+        @click="isShowSearch = !isShowSearch"
+      >
+        <i class="iconCommon search"></i>
+        搜索
+      </el-button>
+      <div class="searchContext" v-if="isShowSearch">
+        <el-form
+          :model="searchFrom"
+          status-icon
+          ref="ruleForm"
+          label-width="90px"
+          class="demo-ruleForm"
+        >
+          <el-form-item label="设备类型：" prop="devType">
+            <el-select
+              v-model="searchFrom.devType"
+              placeholder="请选择"
+              style="width: 100%"
+            >
+              <el-option
+                v-for="item in devTypeList"
+                :key="item.deviceTypeId"
+                :label="item.dictLabel"
+                :value="item.deviceTypeId"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="设备编号：" prop="devCode">
+            <el-input
+              type="text"
+              v-model="searchFrom.devCode"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm">搜索</el-button>
+            <el-button @click="closeSearchBox">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
   </el-button-group>
+  <!--  -->
 </template>
 
 <script>
@@ -48,9 +91,36 @@ export default {
       default: [],
     },
   },
+  data() {
+    return {
+      searchFrom: {
+        devType: "",
+        devCode: "",
+      },
+      isShowSearch: false,
+    };
+  },
   methods: {
     navClickFn(item) {
       this.$emit("navClickFn", item);
+    },
+    closeSearchBox() {
+      this.isShowSearch = false;
+      this.searchFrom = {
+        devType: "",
+        devCode: "",
+      };
+    },
+    submitForm() {
+      if (
+        this.searchFrom &&
+        this.searchFrom.devType &&
+        this.searchFrom.devCode
+      ) {
+        this.$emit("searchDevPosition", this.searchFrom);
+      } else {
+        this.$message.info("请选择要查看的设备数据");
+      }
     },
   },
 };
@@ -106,6 +176,31 @@ export default {
   &.backBtn {
     font-size: 25px;
     margin: 0 !important;
+  }
+}
+.searchBox {
+  position: relative;
+  display: inline-block;
+  .searchContext {
+    position: absolute;
+    top: 50px;
+    right: 5px;
+    width: 400px;
+    padding: 20px 20px 0 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    z-index: 999;
+    &::after {
+      content: "";
+      position: absolute;
+      right: 20px;
+      top: -8px;
+      width: 0;
+      height: 0;
+      border-bottom: 8px solid #fff;
+      border-right: 8px solid transparent;
+      border-left: 8px solid transparent;
+    }
   }
 }
 </style>

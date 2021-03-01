@@ -1,6 +1,10 @@
 <template>
   <div class="mainBox">
-    <Navbar :devTypeList="devTypeList" @navClickFn="navClickFn" />
+    <Navbar
+      :devTypeList="devTypeList"
+      @navClickFn="navClickFn"
+      @searchDevPosition="searchDevPosition"
+    />
     <Action :tunnelList="tunnelList" @changeTunnel="changeTunnel" />
     <div class="drawingBoardBox" v-if="tunnelInfo">
       <DrawingBoard
@@ -8,6 +12,8 @@
         :devObj="devObj"
         :currentStakeNum="currentStakeNum"
         :scaleData="scaleData"
+        @fanClick="fanClickOpen"
+        @lightingClick="lightingClickOpen"
       />
     </div>
     <!-- <div style="width: 100%;height: 650px;">
@@ -17,6 +23,20 @@
     <div class="consoleAreaBox">
       <ConsoleArea />
     </div>
+    <FanModal
+      v-if="fanVisible"
+      :fanVisible="fanVisible"
+      :fanActiveRow="fanActiveRow"
+      @fanClickClose="fanClickClose"
+      @fanChangeData="fanChangeData"
+    />
+    <LightingModal
+      v-if="lightingVisible"
+      :lightingVisible="lightingVisible"
+      :lightingActiveRow="lightingActiveRow"
+      @lightingClickClose="lightingClickClose"
+      @lightingChangeData="lightingChangeData"
+    />
   </div>
 </template>
 
@@ -26,6 +46,8 @@ import Action from "./Action";
 import DrawingBoard from "./DrawingBoard";
 import ConsoleArea from "./ConsoleArea/index";
 import Scale from "./Scale";
+import FanModal from "./ModalTemplate/FanModal";
+import LightingModal from "./ModalTemplate/LightingModal";
 
 import {
   getTunnelList,
@@ -41,6 +63,8 @@ export default {
     DrawingBoard,
     ConsoleArea,
     Scale,
+    FanModal,
+    LightingModal,
   },
   data() {
     return {
@@ -52,6 +76,12 @@ export default {
       devObj: {}, // 设备所有数据集合，处理完成
       scaleData: null, // 刻度尺数据
       currentStakeNum: null, // 当前桩号
+
+      // 模态框状态
+      fanVisible: false, // 风机模态框是否显示
+      fanActiveRow: null, // 风机选中设备的数据
+      lightingVisible: false, // 灯光模态框是否显示
+      lightingActiveRow: null, // 灯光选中设备的数据
     };
   },
   watch: {
@@ -213,7 +243,10 @@ export default {
           console.log(error);
         });
     },
-    // 更改隧道
+    /**
+     * 更改隧道
+     * @param value 隧道id
+     */
     changeTunnel(value) {
       this.tunnelId = value;
       this.getTunnelInfo();
@@ -275,9 +308,62 @@ export default {
         console.log("该隧道没有初始值，请在管理端配置");
       }
     },
-    // 控制设备显示隐藏
+    /**
+     * 设备类型控制设备显示隐藏
+     * @param item 选中的设备类型数据
+     */
     navClickFn(item) {
       this.$set(item, "isSelect", !item.isSelect);
+    },
+    /**
+     * 风机控制打开
+     * @param item 选中的设备数据
+     */
+    fanClickOpen(item) {
+      this.fanActiveRow = item;
+      this.fanVisible = true;
+    },
+    // 风机控制关闭
+    fanClickClose() {
+      this.fanActiveRow = null;
+      this.fanVisible = false;
+    },
+    /**
+     *  风机修改运行状态
+     * @param status 要修改的风机状态
+     */
+    fanChangeData(status) {
+      this.$set(this.fanActiveRow, "workStatus", status);
+      this.fanClickClose();
+    },
+    /**
+     * 灯光控制打开
+     * @param item 选中的设备数据
+     */
+    lightingClickOpen(item) {
+      this.lightingActiveRow = item;
+      this.lightingVisible = true;
+    },
+    // 灯光控制关闭
+    lightingClickClose() {
+      this.lightingActiveRow = null;
+      this.lightingVisible = false;
+    },
+    /**
+     *  灯光修改状态
+     * @param status 要修改的灯光状态
+     */
+    lightingChangeData(status) {
+      this.$set(this.lightingActiveRow, "workStatus", status);
+      this.lightingClickClose();
+    },
+    /**
+     * 设备信息搜索条件，实现定位到对应的设备位置
+     * @param searchFrom 用来定位设备的搜索条件
+     */
+    searchDevPosition(searchFrom) {
+      console.log(searchFrom);
+      // this.$message.info(searchFrom);
     },
   },
 };
