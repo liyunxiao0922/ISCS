@@ -118,6 +118,7 @@ export default {
         this.searchFrom.devCode
       ) {
         this.$emit("searchDevPosition", this.searchFrom);
+        this.closeSearchBox();
       } else {
         this.$message.info("请选择要查看的设备数据");
       }

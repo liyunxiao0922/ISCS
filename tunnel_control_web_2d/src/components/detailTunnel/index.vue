@@ -14,6 +14,7 @@
         :scaleData="scaleData"
         @fanClick="fanClickOpen"
         @lightingClick="lightingClickOpen"
+        :searchFromData="searchFromData"
       />
     </div>
     <!-- <div style="width: 100%;height: 650px;">
@@ -76,6 +77,7 @@ export default {
       devObj: {}, // 设备所有数据集合，处理完成
       scaleData: null, // 刻度尺数据
       currentStakeNum: null, // 当前桩号
+      searchFromData: null, // 查询条件
 
       // 模态框状态
       fanVisible: false, // 风机模态框是否显示
@@ -150,6 +152,7 @@ export default {
             upList: element.tunnelDeviceUpList,
             downList: element.tunnelDeviceDownList,
             startPosition: element.startPosition,
+            deviceTypeId: element.deviceTypeId,
           };
           switch (element.deviceTypeCode) {
             case "102":
@@ -362,8 +365,54 @@ export default {
      * @param searchFrom 用来定位设备的搜索条件
      */
     searchDevPosition(searchFrom) {
-      console.log(searchFrom);
-      // this.$message.info(searchFrom);
+      for (const key in this.devObj) {
+        if (Object.hasOwnProperty.call(this.devObj, key)) {
+          const element = this.devObj[key];
+          if (searchFrom.devType === element.deviceTypeId) {
+            let upList = element.upList,
+              downList = element.downList;
+            let flag = true;
+            for (let index = 0; index < upList.length; index++) {
+              const item = upList[index];
+              if (item.deviceCode === searchFrom.devCode) {
+                this.searchFromData = {
+                  dev: item,
+                  key,
+                  index,
+                };
+                flag = false;
+                this.$set(element.upList[index], "isSearch", true);
+                setTimeout(() => {
+                  this.$set(element.upList[index], "isSearch", false);
+                }, 3000);
+                break;
+              } else {
+                this.searchFromData = undefined;
+              }
+            }
+            if (flag) {
+              for (let index = 0; index < downList.length; index++) {
+                const item = downList[index];
+                if (item.deviceCode === searchFrom.devCode) {
+                  this.searchFromData = {
+                    dev: item,
+                    key,
+                    index,
+                  };
+                  this.$set(element.downList[index], "isSearch", true);
+                  setTimeout(() => {
+                    this.$set(element.upList[index], "isSearch", false);
+                  }, 1000);
+                  break;
+                } else {
+                  this.searchFromData = undefined;
+                }
+              }
+            }
+            break;
+          }
+        }
+      }
     },
   },
 };

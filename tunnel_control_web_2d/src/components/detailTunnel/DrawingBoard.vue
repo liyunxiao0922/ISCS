@@ -17,8 +17,12 @@
           <!-- 车道指示灯灯 -->
           <div class="itemBox laneIndicatorUpBox">
             <div
-              class="laneIndicatorItem"
               v-for="(item, index) in devObj.laneIndicator.upList"
+              :class="
+                item.isSearch
+                  ? 'laneIndicatorItem isSearch'
+                  : 'laneIndicatorItem'
+              "
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.laneIndicator, index) }"
             >
@@ -27,8 +31,12 @@
           </div>
           <div class="itemBox laneIndicatorDownBox">
             <div
-              class="laneIndicatorItem"
               v-for="(item, index) in devObj.laneIndicator.downList"
+              :class="
+                item.isSearch
+                  ? 'laneIndicatorItem isSearch'
+                  : 'laneIndicatorItem'
+              "
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.laneIndicator, index) }"
             >
@@ -40,9 +48,15 @@
             <div
               :class="
                 item.workStatus === '0011'
-                  ? 'tunnelFanItem stop'
+                  ? item.isSearch
+                    ? 'tunnelFanItem stop isSearch'
+                    : 'tunnelFanItem stop'
                   : item.workStatus === '0000'
-                  ? 'tunnelFanItem positive'
+                  ? item.isSearch
+                    ? 'tunnelFanItem positive isSearch'
+                    : 'tunnelFanItem positive'
+                  : item.isSearch
+                  ? 'tunnelFanItem reverse isSearch'
                   : 'tunnelFanItem reverse'
               "
               v-for="(item, index) in devObj.tunnelFan.upList"
@@ -62,9 +76,15 @@
             <div
               :class="
                 item.workStatus === '0011'
-                  ? 'tunnelFanItem stop'
+                  ? item.isSearch
+                    ? 'tunnelFanItem stop isSearch'
+                    : 'tunnelFanItem stop'
                   : item.workStatus === '0000'
-                  ? 'tunnelFanItem positive'
+                  ? item.isSearch
+                    ? 'tunnelFanItem positive isSearch'
+                    : 'tunnelFanItem positive'
+                  : item.isSearch
+                  ? 'tunnelFanItem reverse isSearch'
                   : 'tunnelFanItem reverse'
               "
               v-for="(item, index) in devObj.tunnelFan.downList"
@@ -83,8 +103,8 @@
           <!-- 灯光 -->
           <div class="itemBox lightingUpBox">
             <div
-              class="lightingItem"
               v-for="(item, index) in devObj.lighting.upList"
+              :class="item.isSearch ? 'lightingItem isSearch' : 'lightingItem'"
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.lighting, index) }"
               @click="lightingClick(item)"
@@ -99,8 +119,8 @@
           </div>
           <div class="itemBox lightingDownBox">
             <div
-              class="lightingItem"
               v-for="(item, index) in devObj.lighting.downList"
+              :class="item.isSearch ? 'lightingItem isSearch' : 'lightingItem'"
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.lighting, index) }"
               @click="lightingClick(item)"
@@ -116,8 +136,10 @@
           <!-- 信号灯 -->
           <div class="itemBox signalLampUpBox">
             <div
-              class="signalLampItem"
               v-for="(item, index) in devObj.signalLamp.upList"
+              :class="
+                item.isSearch ? 'signalLampItem isSearch' : 'signalLampItem'
+              "
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.signalLamp, index) }"
             >
@@ -126,8 +148,10 @@
           </div>
           <div class="itemBox signalLampDownBox">
             <div
-              class="signalLampItem"
               v-for="(item, index) in devObj.signalLamp.downList"
+              :class="
+                item.isSearch ? 'signalLampItem isSearch' : 'signalLampItem'
+              "
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.signalLamp, index) }"
             >
@@ -137,8 +161,12 @@
           <!-- 亮度检测器 -->
           <div class="itemBox brightnessDetectorUpBox">
             <div
-              class="brightnessDetectorItem"
               v-for="(item, index) in devObj.brightnessDetector.upList"
+              :class="
+                item.isSearch
+                  ? 'brightnessDetectorItem isSearch'
+                  : 'brightnessDetectorItem'
+              "
               :key="item.deviceId"
               :style="{
                 left: returnLeftValue(devObj.brightnessDetector, index),
@@ -152,8 +180,12 @@
           </div>
           <div class="itemBox brightnessDetectorDownBox">
             <div
-              class="brightnessDetectorItem"
               v-for="(item, index) in devObj.brightnessDetector.downList"
+              :class="
+                item.isSearch
+                  ? 'brightnessDetectorItem isSearch'
+                  : 'brightnessDetectorItem'
+              "
               :key="item.deviceId"
               :style="{
                 left: returnLeftValue(devObj.brightnessDetector, index),
@@ -168,8 +200,12 @@
           <!-- 照度检测器 -->
           <div class="itemBox illuminanceDetectorUpBox">
             <div
-              class="illuminanceDetectorItem"
               v-for="(item, index) in devObj.illuminanceDetector.upList"
+              :class="
+                item.isSearch
+                  ? 'illuminanceDetectorItem isSearch'
+                  : 'illuminanceDetectorItem'
+              "
               :key="item.deviceId"
               :style="{
                 left: returnLeftValue(devObj.illuminanceDetector, index),
@@ -184,8 +220,12 @@
           </div>
           <div class="itemBox illuminanceDetectorDownBox">
             <div
-              class="illuminanceDetectorItem"
               v-for="(item, index) in devObj.illuminanceDetector.downList"
+              :class="
+                item.isSearch
+                  ? 'illuminanceDetectorItem isSearch'
+                  : 'illuminanceDetectorItem'
+              "
               :key="item.deviceId"
               :style="{
                 left: returnLeftValue(devObj.illuminanceDetector, index),
@@ -201,8 +241,12 @@
           <!-- 风速风向仪 -->
           <div class="itemBox anemoclinographUpBox">
             <div
-              class="anemoclinographItem"
               v-for="(item, index) in devObj.anemoclinograph.upList"
+              :class="
+                item.isSearch
+                  ? 'anemoclinographItem isSearch'
+                  : 'anemoclinographItem'
+              "
               :key="item.deviceId"
               :style="{
                 left: returnLeftValue(devObj.anemoclinograph, index),
@@ -216,8 +260,12 @@
           </div>
           <div class="itemBox anemoclinographDownBox">
             <div
-              class="anemoclinographItem"
               v-for="(item, index) in devObj.anemoclinograph.downList"
+              :class="
+                item.isSearch
+                  ? 'anemoclinographItem isSearch'
+                  : 'anemoclinographItem'
+              "
               :key="item.deviceId"
               :style="{
                 left: returnLeftValue(devObj.anemoclinograph, index),
@@ -232,8 +280,12 @@
           <!-- 车辆检测器 -->
           <div class="itemBox vehicleDetectorUpBox">
             <div
-              class="vehicleDetectorItem"
               v-for="(item, index) in devObj.vehicleDetector.upList"
+              :class="
+                item.isSearch
+                  ? 'vehicleDetectorItem isSearch'
+                  : 'vehicleDetectorItem'
+              "
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.vehicleDetector, index) }"
             >
@@ -242,8 +294,12 @@
           </div>
           <div class="itemBox vehicleDetectorDownBox">
             <div
-              class="vehicleDetectorItem"
               v-for="(item, index) in devObj.vehicleDetector.downList"
+              :class="
+                item.isSearch
+                  ? 'vehicleDetectorItem isSearch'
+                  : 'vehicleDetectorItem'
+              "
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.vehicleDetector, index) }"
             >
@@ -253,8 +309,12 @@
           <!-- 情报板 -->
           <div class="itemBox informationBoardUpBox">
             <div
-              class="informationBoardItem"
               v-for="(item, index) in devObj.informationBoard.upList"
+              :class="
+                item.isSearch
+                  ? 'informationBoardItem isSearch'
+                  : 'informationBoardItem'
+              "
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.informationBoard, index) }"
             >
@@ -263,8 +323,12 @@
           </div>
           <div class="itemBox informationBoardDownBox">
             <div
-              class="informationBoardItem"
               v-for="(item, index) in devObj.informationBoard.downList"
+              :class="
+                item.isSearch
+                  ? 'informationBoardItem isSearch'
+                  : 'informationBoardItem'
+              "
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.informationBoard, index) }"
             >
@@ -285,8 +349,10 @@
           <!-- 车行通道 -->
           <div class="itemBox passagewayBox">
             <div
-              class="passagewayItem"
               v-for="(item, index) in devObj.passageway.upList"
+              :class="
+                item.isSearch ? 'passagewayItem isSearch' : 'passagewayItem'
+              "
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.passageway, index) }"
             >
@@ -342,7 +408,6 @@
       <div class="mask">
         <div class="robotBottom" ref="robotBottom"></div>
       </div>
-
       <div class="scrollBtn" ref="scrollBtn">
         <div class="scrollBtnMask">
           <span class="scrollContext">{{ scrollContextValue }}米</span>
@@ -374,6 +439,9 @@ export default {
       type: Array,
       defqult: [],
     },
+    searchFromData: {
+      type: Object || null || undefined,
+    },
   },
   components: {
     Scale,
@@ -396,6 +464,68 @@ export default {
   destroyed() {
     clearInterval(this.robotIntelTop);
     clearInterval(this.robotIntelBottom);
+  },
+  watch: {
+    searchFromData: {
+      immediate: true,
+      deep: true,
+      handler(newValue) {
+        /**
+         * 1. 判断是否有搜索条件，有走下边的计算，没有，位置全部归0。
+         * 2. 通过搜索条件给的参数，来判断对应的left值，如果left不等于-100%的话，继续走，否则全部归0。
+         * 3. 判断left值是不是小于屏幕宽度，如果小于，页面就不做位移，如果大于，就位移left长度减去页面的一半长度。
+         * 4. 下边的值是通过滚动条的计算方式反推的
+         */
+        if (newValue) {
+          let left = this.returnLeftValue(
+            this.devObj[newValue.key],
+            newValue.index
+          );
+          let main_drawingBox = this.$refs.main_drawingBox,
+            main_drawingContext = this.$refs.main_drawingContext,
+            scrollBox = this.$refs.scrollBox,
+            scrollBtn = this.$refs.scrollBtn;
+          if (left != "-100%") {
+            left = left.replace("px", "");
+            var baWidth = parseInt(
+              scrollBox.offsetWidth - scrollBtn.offsetWidth
+            );
+            if (left - 0 > baWidth) {
+              left = left - baWidth / 2;
+              let tunnelLength = this.tunnelInfo.tunnelLength - 0;
+              let mainContextWidth = tunnelLength * this.devRatio;
+              let main_drawingContextWidth = mainContextWidth + 440;
+              var conWidth = parseInt(
+                main_drawingContextWidth - main_drawingBox.offsetWidth
+              );
+              let x = (left * baWidth) / conWidth;
+
+              scrollBtn.style.left = x + "px";
+              main_drawingContext.style.marginLeft = -left + "px";
+              this.scrollContextValue = parseInt((tunnelLength / baWidth) * x);
+            } else {
+              main_drawingContext.style.marginLeft = "0px";
+              this.scrollContextValue = 0;
+              scrollBtn.style.left = "0px";
+            }
+          } else {
+            main_drawingContext.style.marginLeft = "0px";
+            this.scrollContextValue = 0;
+            scrollBtn.style.left = "0px";
+            this.$message.info("该设备安装位置有误，未在本隧道展示");
+          }
+        } else if (newValue === undefined) {
+          let main_drawingContext = this.$refs.main_drawingContext,
+            scrollBtn = this.$refs.scrollBtn;
+          if (main_drawingContext) {
+            main_drawingContext.style.marginLeft = "0px";
+            this.scrollContextValue = 0;
+            scrollBtn.style.left = "0px";
+          }
+          this.$message.info("没有检索到该编号设备");
+        }
+      },
+    },
   },
   methods: {
     /**
