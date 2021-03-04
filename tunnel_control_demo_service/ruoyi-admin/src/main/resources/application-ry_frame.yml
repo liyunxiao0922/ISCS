@@ -1,11 +1,11 @@
 ruoyi:
+    domainName: http://tunnel-device-admin-api.xaxhl.net
     # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-    profile: C:/ruoyi/uploadPath
-    domainName:
+    profile: /home/ruoyi/uploadPath
 
 server:
     # 服务器的HTTP端口，默认为8080
-    port: 8081
+    port: 9099
 
 # 数据源配置
 spring:
@@ -13,11 +13,11 @@ spring:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.cj.jdbc.Driver
         # driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/ry-vue?characterEncoding=utf-8&useSSl=true&serverTimezone=UTC&allowMultiQueries=true
+        url: jdbc:mysql://127.0.0.1:3306/ry-frame-test?characterEncoding=utf-8&useSSl=true&serverTimezone=UTC&allowMultiQueries=true
         #url: jdbc:mysql://47.104.229.4:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         #url: jdbc:mysql://localhost:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
         username: root
-        password: 123456
+        password: preorder
         druid:
             # 初始连接数
             initialSize: 5

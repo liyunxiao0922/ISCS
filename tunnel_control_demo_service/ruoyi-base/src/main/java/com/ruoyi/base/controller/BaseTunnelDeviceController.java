@@ -32,82 +32,86 @@ import com.ruoyi.common.core.page.TableDataInfo;
 @RestController
 @RequestMapping("/baseTunnelDevice")
 @Api(tags = "具体设备管理")
-public class BaseTunnelDeviceController extends BaseController
-{
-    @Autowired
-    private IBaseTunnelDeviceService baseTunnelDeviceService;
+public class BaseTunnelDeviceController extends BaseController {
+	@Autowired
+	private IBaseTunnelDeviceService baseTunnelDeviceService;
 
-    /**
-     * 查询基础数据设备列表
-     */
-    @PreAuthorize("@ss.hasPermi('base:tunnelDevice:list')")
-    @GetMapping("/list")
-    @ApiOperation("分页查询")
-    public TableDataInfo list(BaseTunnelDevice baseTunnelDevice)
-    {
-        startPage();
-        List<BaseTunnelDevice> list = baseTunnelDeviceService.selectBaseTunnelDeviceList(baseTunnelDevice);
-        return getDataTable(list);
-    }
+	/**
+	 * 查询基础数据设备列表
+	 */
+	@PreAuthorize("@ss.hasPermi('base:tunnelDevice:list')")
+	@GetMapping("/list")
+	@ApiOperation("分页查询")
+	public TableDataInfo list(BaseTunnelDevice baseTunnelDevice) {
+		startPage();
+		List<BaseTunnelDevice> list = baseTunnelDeviceService.selectBaseTunnelDeviceList(baseTunnelDevice);
+		return getDataTable(list);
+	}
 
-    /**
-     * 导出基础数据设备列表
-     */
-    @PreAuthorize("@ss.hasPermi('base:tunnelDevice:export')")
-    @Log(title = "基础数据设备", businessType = BusinessType.EXPORT)
-    @GetMapping("/export")
-    @ApiOperation("导出")
-    public AjaxResult export(BaseTunnelDevice baseTunnelDevice)
-    {
-        List<BaseTunnelDevice> list = baseTunnelDeviceService.selectBaseTunnelDeviceList(baseTunnelDevice);
-        ExcelUtil<BaseTunnelDevice> util = new ExcelUtil<BaseTunnelDevice>(BaseTunnelDevice.class);
-        return util.exportExcel(list, "tunnelDevice");
-    }
+	/**
+	 * 导出基础数据设备列表
+	 */
+	@PreAuthorize("@ss.hasPermi('base:tunnelDevice:export')")
+	@Log(title = "基础数据设备", businessType = BusinessType.EXPORT)
+	@GetMapping("/export")
+	@ApiOperation("导出")
+	public AjaxResult export(BaseTunnelDevice baseTunnelDevice) {
+		List<BaseTunnelDevice> list = baseTunnelDeviceService.selectBaseTunnelDeviceList(baseTunnelDevice);
+		ExcelUtil<BaseTunnelDevice> util = new ExcelUtil<BaseTunnelDevice>(BaseTunnelDevice.class);
+		return util.exportExcel(list, "tunnelDevice");
+	}
 
-    /**
-     * 获取基础数据设备详细信息
-     */
-    @PreAuthorize("@ss.hasPermi('base:tunnelDevice:query')")
-    @GetMapping(value = "/getInfo")
-    @ApiOperation("单个设备详情")
-    public AjaxResult getInfo(Long deviceId)
-    {
-        return AjaxResult.success(baseTunnelDeviceService.selectBaseTunnelDeviceById(deviceId));
-    }
+	/**
+	 * 获取基础数据设备详细信息
+	 */
+	@PreAuthorize("@ss.hasPermi('base:tunnelDevice:query')")
+	@GetMapping(value = "/getInfo")
+	@ApiOperation("单个设备详情")
+	public AjaxResult getInfo(Long deviceId) {
+		return AjaxResult.success(baseTunnelDeviceService.selectBaseTunnelDeviceById(deviceId));
+	}
 
-    /**
-     * 新增基础数据设备
-     */
-    @PreAuthorize("@ss.hasPermi('base:tunnelDevice:add')")
-    @Log(title = "基础数据设备", businessType = BusinessType.INSERT)
-    @PostMapping("add")
-    @ApiOperation("添加")
-    public AjaxResult add(@RequestBody BaseTunnelDevice baseTunnelDevice)
-    {
-        return toAjax(baseTunnelDeviceService.insertBaseTunnelDevice(baseTunnelDevice));
-    }
+	/**
+	 * 新增基础数据设备
+	 */
+	@PreAuthorize("@ss.hasPermi('base:tunnelDevice:add')")
+	@Log(title = "基础数据设备", businessType = BusinessType.INSERT)
+	@PostMapping("/add")
+	@ApiOperation("添加")
+	public AjaxResult add(@RequestBody BaseTunnelDevice baseTunnelDevice) {
+		return toAjax(baseTunnelDeviceService.insertBaseTunnelDevice(baseTunnelDevice));
+	}
 
-    /**
-     * 修改基础数据设备
-     */
-    @PreAuthorize("@ss.hasPermi('base:tunnelDevice:edit')")
-    @Log(title = "基础数据设备", businessType = BusinessType.UPDATE)
-    @PutMapping("edit")
-    @ApiOperation("编辑")
-    public AjaxResult edit(@RequestBody BaseTunnelDevice baseTunnelDevice)
-    {
-        return toAjax(baseTunnelDeviceService.updateBaseTunnelDevice(baseTunnelDevice));
-    }
+	/**
+	 * 修改基础数据设备
+	 */
+	@PreAuthorize("@ss.hasPermi('base:tunnelDevice:edit')")
+	@Log(title = "基础数据设备", businessType = BusinessType.UPDATE)
+	@PutMapping("/edit")
+	@ApiOperation("编辑")
+	public AjaxResult edit(@RequestBody BaseTunnelDevice baseTunnelDevice) {
+		return toAjax(baseTunnelDeviceService.updateBaseTunnelDevice(baseTunnelDevice));
+	}
+	
+	/**
+	 * 修改基础数据设备
+	 */
+	@PreAuthorize("@ss.hasPermi('base:tunnelDevice:edit')")
+	@Log(title = "基础数据设备", businessType = BusinessType.UPDATE)
+	@PutMapping("/editByDeviceType")
+	@ApiOperation("编辑")
+	public AjaxResult editByDeviceType(@RequestBody BaseTunnelDevice baseTunnelDevice) {
+		return toAjax(baseTunnelDeviceService.updateBaseTunnelDeviceByDeviceType(baseTunnelDevice));
+	}
 
-    /**
-     * 删除基础数据设备
-     */
-    @PreAuthorize("@ss.hasPermi('base:tunnelDevice:remove')")
-    @Log(title = "基础数据设备", businessType = BusinessType.DELETE)
+	/**
+	 * 删除基础数据设备
+	 */
+	@PreAuthorize("@ss.hasPermi('base:tunnelDevice:remove')")
+	@Log(title = "基础数据设备", businessType = BusinessType.DELETE)
 	@DeleteMapping("/remove")
-    @ApiOperation("删除")
-    public AjaxResult remove(Long deviceId)
-    {
-        return toAjax(baseTunnelDeviceService.deleteBaseTunnelDeviceById(deviceId));
-    }
+	@ApiOperation("删除")
+	public AjaxResult remove(Long deviceId) {
+		return toAjax(baseTunnelDeviceService.deleteBaseTunnelDeviceById(deviceId));
+	}
 }

@@ -1,19 +1,39 @@
 package com.ruoyi.common.utils;
 
+import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.core.redis.RedisCache;
+import com.ruoyi.common.utils.spring.SpringUtils;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.token.TokenService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.ruoyi.common.constant.HttpStatus;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.exception.CustomException;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 安全服务工具类
  * 
  * @author ruoyi
  */
+@Component
 public class SecurityUtils
 {
+
+    private static ObtainLoginUser obtainLoginUser;
+
+    @Autowired
+    public void setObtainLoginUser(ObtainLoginUser obtainLoginUser) {
+        SecurityUtils.obtainLoginUser = obtainLoginUser;
+    }
+
     /**
      * 获取用户账户
      **/
@@ -21,7 +41,8 @@ public class SecurityUtils
     {
         try
         {
-            return getLoginUser().getUsername();
+            LoginUser loginUser = obtainLoginUser.getLoginUser();
+            return loginUser.getUsername();
         }
         catch (Exception e)
         {
@@ -30,26 +51,12 @@ public class SecurityUtils
     }
 
     /**
-     * 获取用户
-     **/
-    public static LoginUser getLoginUser()
-    {
-        try
-        {
-            return (LoginUser) getAuthentication().getPrincipal();
-        }
-        catch (Exception e)
-        {
-            throw new CustomException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
-        }
-    }
-
-    /**
      * 获取Authentication
      */
     public static Authentication getAuthentication()
     {
-        return SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication;
     }
 
     /**

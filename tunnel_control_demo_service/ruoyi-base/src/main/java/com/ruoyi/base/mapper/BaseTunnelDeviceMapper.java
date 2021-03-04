@@ -42,6 +42,14 @@ public interface BaseTunnelDeviceMapper
      * @return 结果
      */
     public int updateBaseTunnelDevice(BaseTunnelDevice baseTunnelDevice);
+    
+    /**
+     * 修改基础数据设备
+     * 
+     * @param baseTunnelDevice 基础数据设备
+     * @return 结果
+     */
+    public int updateBaseTunnelDeviceByDeviceType(BaseTunnelDevice baseTunnelDevice);
 
     /**
      * 删除基础数据设备
