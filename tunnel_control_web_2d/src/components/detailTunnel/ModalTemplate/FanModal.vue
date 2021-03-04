@@ -22,9 +22,12 @@
       <h3>更改状态</h3>
       <el-form-item label="运行状态:">
         <el-radio-group v-model="form.workStatus" size="small">
-          <el-radio-button label="0000">正向</el-radio-button>
-          <el-radio-button label="0001">反向</el-radio-button>
-          <el-radio-button label="0011">停止</el-radio-button>
+          <el-radio-button
+            v-for="item in activeDevStatusList"
+            :key="item.iconCode"
+            :label="item.iconCode"
+            >{{ item.iconDescription }}</el-radio-button
+          >
         </el-radio-group>
       </el-form-item>
     </el-form>
@@ -46,6 +49,10 @@ export default {
     },
     fanActiveRow: {
       type: Object,
+    },
+    activeDevStatusList: {
+      type: Array,
+      default: [],
     },
   },
   data() {
@@ -84,25 +91,7 @@ export default {
      * 修改状态接口
      */
     saveWorkStatusFn() {
-      if (this.fanActiveRow.workStatus === "0000") {
-        if (this.form.workStatus === "0000") {
-          this.$emit("fanClickClose");
-        } else if (this.form.workStatus === "0001") {
-          this.$message.error("操作不允许,必须停止才可以反向转动");
-        } else {
-          this.$emit("fanChangeData", this.form.workStatus);
-        }
-      } else if (this.fanActiveRow.workStatus === "0001") {
-        if (this.form.workStatus === "0000") {
-          this.$message.error("操作不允许,必须停止才可以正向转动");
-        } else if (this.form.workStatus === "0001") {
-          this.$emit("fanClickClose");
-        } else {
-          this.$emit("fanChangeData", this.form.workStatus);
-        }
-      } else {
-        this.$emit("fanChangeData", this.form.workStatus);
-      }
+      this.$emit("fanChangeData", this.form.workStatus);
     },
   },
 };

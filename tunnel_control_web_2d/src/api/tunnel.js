@@ -35,3 +35,42 @@ export function getDevInfoList(params) {
     data: params
   })
 }
+
+/**
+ * 通过设备类型id查询设备状态列表
+ * @param params deviceTypeId 设备类型id
+ */
+export function getDevStatusList(params) {
+  return request({
+    url: '/baseStatusIcon/list',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 修改设备类型的状态
+ * @param params deviceTypeId  设备类型id
+ * @param params deviceGroup  分组id  
+ * @param params workStatus  状态
+ */
+export function editDevTypeStatus(params) {
+  return request({
+    url: '/baseTunnelDevice/editByDeviceType',
+    method: 'put',
+    data: params
+  })
+}
+
+/**
+ * 修改设备状态
+ * @param params deviceId  设备id
+ * @param params workStatus  设备状态
+ */
+export function editDevStatus(params) {
+  return request({
+    url: '/baseTunnelDevice/edit',
+    method: 'put',
+    data: params
+  })
+}

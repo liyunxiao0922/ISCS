@@ -11,7 +11,12 @@
       <!-- 隧道主体 -->
       <div class="mainContext" ref="mainContext">
         <div class="background_imgBox">
-          <img src="./assets/img/tunnelBackground.png" alt="" />
+          <img
+            v-if="tunnelInfo.tunnelLength - 0 > 500"
+            src="./assets/img/tunnelBackground.png"
+            alt=""
+          />
+          <img v-else src="./assets/img/tunnelBackgroundshort.png" alt="" />
         </div>
         <div class="mainOptionBox">
           <!-- 车道指示灯灯 -->
@@ -47,11 +52,11 @@
           <div class="itemBox tunnelFanUpBox">
             <div
               :class="
-                item.workStatus === '0011'
+                item.workStatus === '0019'
                   ? item.isSearch
                     ? 'tunnelFanItem stop isSearch'
                     : 'tunnelFanItem stop'
-                  : item.workStatus === '0000'
+                  : item.workStatus === '0011'
                   ? item.isSearch
                     ? 'tunnelFanItem positive isSearch'
                     : 'tunnelFanItem positive'
@@ -64,22 +69,17 @@
               :style="{ left: returnLeftValue(devObj.tunnelFan, index) }"
               @click="fanClick(item)"
             >
-              <img
-                v-if="item.workStatus === '0011'"
-                src="./assets/img/fanStop.png"
-                alt="隧道风机icon丢了"
-              />
-              <img v-else :src="item.imageAddress" alt="隧道风机icon丢了" />
+              <img :src="item.imageAddress" alt="隧道风机icon丢了" />
             </div>
           </div>
           <div class="itemBox tunnelFanDownBox">
             <div
               :class="
-                item.workStatus === '0011'
+                item.workStatus === '0019'
                   ? item.isSearch
                     ? 'tunnelFanItem stop isSearch'
                     : 'tunnelFanItem stop'
-                  : item.workStatus === '0000'
+                  : item.workStatus === '0011'
                   ? item.isSearch
                     ? 'tunnelFanItem positive isSearch'
                     : 'tunnelFanItem positive'
@@ -92,12 +92,7 @@
               :style="{ left: returnLeftValue(devObj.tunnelFan, index) }"
               @click="fanClick(item)"
             >
-              <img
-                v-if="item.workStatus === '0011'"
-                src="./assets/img/fanStop.png"
-                alt="隧道风机icon丢了"
-              />
-              <img v-else :src="item.imageAddress" alt="隧道风机icon丢了" />
+              <img :src="item.imageAddress" alt="隧道风机icon丢了" />
             </div>
           </div>
           <!-- 灯光 -->
@@ -109,12 +104,7 @@
               :style="{ left: returnLeftValue(devObj.lighting, index) }"
               @click="lightingClick(item)"
             >
-              <img
-                v-if="item.workStatus === '0009'"
-                src="./assets/img/dengstop.png"
-                alt="隧道风机icon丢了"
-              />
-              <img v-else :src="item.imageAddress" alt="灯光icon丢了" />
+              <img :src="item.imageAddress" alt="灯光icon丢了" />
             </div>
           </div>
           <div class="itemBox lightingDownBox">
@@ -125,12 +115,7 @@
               :style="{ left: returnLeftValue(devObj.lighting, index) }"
               @click="lightingClick(item)"
             >
-              <img
-                v-if="item.workStatus === '0009'"
-                src="./assets/img/dengstop.png"
-                alt="隧道风机icon丢了"
-              />
-              <img v-else :src="item.imageAddress" alt="灯光icon丢了" />
+              <img :src="item.imageAddress" alt="灯光icon丢了" />
             </div>
           </div>
           <!-- 信号灯 -->
@@ -601,7 +586,7 @@ export default {
           str = str - 10;
           shadowleft = shadowleft - shadowDistance;
         }
-        if (str > this.tunnelLengthPx) {
+        if (str > this.tunnelLengthPx-120) {
           direction = 2;
         } else if (str <= 0) {
           direction = 1;
@@ -634,7 +619,7 @@ export default {
           str = str - 10;
           shadowleft = shadowleft - shadowDistance;
         }
-        if (str > this.tunnelLengthPx) {
+        if (str > this.tunnelLengthPx-120) {
           direction = 2;
         } else if (str <= 0) {
           direction = 1;
@@ -708,7 +693,7 @@ export default {
       this.$emit("fanClick", item);
     },
     /**
-     * 风机控制操作
+     * 灯控制操作
      */
     lightingClick(item) {
       this.$emit("lightingClick", item);

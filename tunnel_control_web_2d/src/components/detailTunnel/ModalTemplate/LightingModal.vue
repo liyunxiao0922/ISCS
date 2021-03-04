@@ -22,9 +22,12 @@
       <h3>更改状态</h3>
       <el-form-item label="灯光亮度:">
         <el-radio-group v-model="form.workStatus" size="small">
-          <el-radio-button label="0007">100%</el-radio-button>
-          <el-radio-button label="0008">50%</el-radio-button>
-          <el-radio-button label="0009">关闭</el-radio-button>
+          <el-radio-button
+            v-for="item in activeDevStatusList"
+            :key="item.iconCode"
+            :label="item.iconCode"
+            >{{ item.iconDescription }}</el-radio-button
+          >
         </el-radio-group>
       </el-form-item>
     </el-form>
@@ -48,6 +51,10 @@ export default {
     },
     lightingActiveRow: {
       type: Object,
+    },
+    activeDevStatusList: {
+      type: Array,
+      default: [],
     },
   },
   data() {

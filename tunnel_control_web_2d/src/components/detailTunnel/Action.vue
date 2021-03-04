@@ -16,23 +16,6 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <!-- <el-form-item label="设备名称">
-        <el-input
-          v-model="formInline.user"
-          placeholder="审批人"
-          size="mini"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="设备编号">
-        <el-input
-          v-model="formInline.user"
-          placeholder="审批人"
-          size="mini"
-        ></el-input>
-      </el-form-item> -->
-      <!-- <el-form-item>
-      <el-button type="primary" @click="onSubmit" size="mini">查询</el-button>
-    </el-form-item> -->
     </el-form>
   </div>
 </template>
@@ -45,16 +28,6 @@ export default {
         user: "",
         region: "",
       },
-      // tunnelList: [
-      //   {
-      //     tunnelName: "xx",
-      //     tunnelId: "1",
-      //   },
-      //   {
-      //     tunnelName: "xx",
-      //     tunnelId: "2",
-      //   },
-      // ],
     };
   },
   props: {
@@ -77,9 +50,6 @@ export default {
     },
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
-    },
     changeTunnel(value) {
       this.$emit("changeTunnel", value);
     },

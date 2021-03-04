@@ -4,6 +4,7 @@
       :devTypeList="devTypeList"
       @navClickFn="navClickFn"
       @searchDevPosition="searchDevPosition"
+      @groupControlClick="groupControlClick"
     />
     <Action :tunnelList="tunnelList" @changeTunnel="changeTunnel" />
     <div class="drawingBoardBox" v-if="tunnelInfo">
@@ -30,6 +31,7 @@
       :fanActiveRow="fanActiveRow"
       @fanClickClose="fanClickClose"
       @fanChangeData="fanChangeData"
+      :activeDevStatusList="activeDevStatusList"
     />
     <LightingModal
       v-if="lightingVisible"
@@ -37,6 +39,14 @@
       :lightingActiveRow="lightingActiveRow"
       @lightingClickClose="lightingClickClose"
       @lightingChangeData="lightingChangeData"
+      :activeDevStatusList="activeDevStatusList"
+    />
+    <GroupControlModal
+      v-if="groupControlVisible"
+      :groupControlVisible="groupControlVisible"
+      @groupControlClick="groupControlClick"
+      :groupControlDevTypeIdList="groupControlDevTypeIdList"
+      @getDevTypeList="getDevTypeList"
     />
   </div>
 </template>
@@ -49,12 +59,15 @@ import ConsoleArea from "./ConsoleArea/index";
 import Scale from "./Scale";
 import FanModal from "./ModalTemplate/FanModal";
 import LightingModal from "./ModalTemplate/LightingModal";
+import GroupControlModal from "./ModalTemplate/GroupControlModal";
 
 import {
   getTunnelList,
   getTunnelInfo,
   getDevTypeList,
   getDevInfoList,
+  getDevStatusList,
+  editDevStatus,
 } from "@/api/tunnel";
 
 export default {
@@ -66,6 +79,7 @@ export default {
     Scale,
     FanModal,
     LightingModal,
+    GroupControlModal,
   },
   data() {
     return {
@@ -78,12 +92,14 @@ export default {
       scaleData: null, // 刻度尺数据
       currentStakeNum: null, // 当前桩号
       searchFromData: null, // 查询条件
+      activeDevStatusList: [], // 设备类型状态列表
 
       // 模态框状态
       fanVisible: false, // 风机模态框是否显示
       fanActiveRow: null, // 风机选中设备的数据
       lightingVisible: false, // 灯光模态框是否显示
       lightingActiveRow: null, // 灯光选中设备的数据
+      groupControlVisible: false, // 群控策略模态框是否显示
     };
   },
   watch: {
@@ -91,10 +107,16 @@ export default {
     devTypeList: {
       immediate: true,
       deep: true,
-      handler(newValue) {
+      handler(newValue = []) {
         this.devTypeIdList = newValue
           .filter((item) => item.isSelect == true)
           .map((item) => item.deviceTypeId);
+        this.groupControlDevTypeIdList = newValue.filter(
+          (item) =>
+            item.deviceTypeCode == "104" ||
+            item.deviceTypeCode == "115" ||
+            item.deviceTypeCode == "118"
+        );
         let obj = {
           isShow: false,
           upList: [],
@@ -211,13 +233,16 @@ export default {
     getTunnelInfo() {
       getTunnelInfo({ tunnelId: this.tunnelId })
         .then((response) => {
-          this.tunnelInfo = response.data;
-          this.currentStakeNum = response.data.startSign;
-          this.scaleData =
-            this.scaleDataCreate(
-              response.data.startSign,
-              response.data.tunnelLength
-            ) ?? [];
+          this.tunnelInfo = null;
+          setTimeout(() => {
+            this.tunnelInfo = response.data;
+            this.currentStakeNum = response.data.startSign;
+            this.scaleData =
+              this.scaleDataCreate(
+                response.data.startSign,
+                response.data.tunnelLength
+              ) ?? [];
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -319,10 +344,17 @@ export default {
       this.$set(item, "isSelect", !item.isSelect);
     },
     /**
+     * 群控策略模态框打开
+     */
+    groupControlClick() {
+      this.groupControlVisible = !this.groupControlVisible;
+    },
+    /**
      * 风机控制打开
      * @param item 选中的设备数据
      */
     fanClickOpen(item) {
+      this.getDevStatusList(item.deviceTypeId);
       this.fanActiveRow = item;
       this.fanVisible = true;
     },
@@ -336,15 +368,16 @@ export default {
      * @param status 要修改的风机状态
      */
     fanChangeData(status) {
-      this.$set(this.fanActiveRow, "workStatus", status);
-      this.fanClickClose();
+      this.changeDevTypeStatusFn(this.fanActiveRow.deviceId, status, "fan");
     },
     /**
      * 灯光控制打开
      * @param item 选中的设备数据
      */
     lightingClickOpen(item) {
+      this.getDevStatusList(item.deviceTypeId);
       this.lightingActiveRow = item;
+
       this.lightingVisible = true;
     },
     // 灯光控制关闭
@@ -357,8 +390,11 @@ export default {
      * @param status 要修改的灯光状态
      */
     lightingChangeData(status) {
-      this.$set(this.lightingActiveRow, "workStatus", status);
-      this.lightingClickClose();
+      this.changeDevTypeStatusFn(
+        this.lightingActiveRow.deviceId,
+        status,
+        "lighting"
+      );
     },
     /**
      * 设备信息搜索条件，实现定位到对应的设备位置
@@ -413,6 +449,42 @@ export default {
           }
         }
       }
+    },
+    /**
+     * 查询设备类型状态
+     */
+    getDevStatusList(deviceTypeId) {
+      getDevStatusList({ deviceTypeId })
+        .then((response) => {
+          this.activeDevStatusList = response.rows ?? [];
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    /**
+     * 修改设备的状态
+     * @param deviceId   设备id
+     * @param workStatus  设备状态
+     * @param source 来源
+     */
+    changeDevTypeStatusFn(deviceId, workStatus, source) {
+      editDevStatus({
+        deviceId,
+        workStatus,
+      })
+        .then(() => {
+          this.$message.success("更改成功");
+          if (source === "fan") {
+            this.fanClickClose();
+          } else if (source === "lighting") {
+            this.lightingClickClose();
+          }
+          this.getDevTypeList();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

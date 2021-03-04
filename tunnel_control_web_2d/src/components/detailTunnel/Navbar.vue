@@ -28,7 +28,11 @@
       火灾
     </el-button>
     <div class="divider"></div>
-    <el-button type="text" class="btnCommon">
+    <el-button
+      type="text"
+      class="btnCommon"
+      @click="$emit('groupControlClick')"
+    >
       <i class="iconCommon strategy"></i>
       群控策略
     </el-button>
