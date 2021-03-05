@@ -100,14 +100,16 @@ export default {
       searchFrom: {
         devType: "",
         devCode: "",
-      },
-      isShowSearch: false,
+      }, // 搜索条件
+      isShowSearch: false, // 是否显示搜索框
     };
   },
   methods: {
+    // 点击对应的菜单
     navClickFn(item) {
       this.$emit("navClickFn", item);
     },
+    // 隐藏搜索框
     closeSearchBox() {
       this.isShowSearch = false;
       this.searchFrom = {
@@ -115,6 +117,7 @@ export default {
         devCode: "",
       };
     },
+    // 提交搜索条件
     submitForm() {
       if (
         this.searchFrom &&

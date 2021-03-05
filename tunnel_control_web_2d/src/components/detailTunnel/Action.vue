@@ -3,7 +3,7 @@
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item>
         <el-select
-          v-model="formInline.region"
+          v-model="formInline.tunnelId"
           placeholder="请选择"
           size="mini"
           @change="changeTunnel"
@@ -25,8 +25,7 @@ export default {
   data() {
     return {
       formInline: {
-        user: "",
-        region: "",
+        tunnelId: "", // 选中的隧道id
       },
     };
   },
@@ -42,14 +41,18 @@ export default {
       deep: true,
       handler(newValue = []) {
         if (newValue.length) {
-          this.formInline.region = newValue[0].tunnelId;
+          this.formInline.tunnelId = newValue[0].tunnelId;
         } else {
-          this.formInline.region = "";
+          this.formInline.tunnelId = "";
         }
       },
     },
   },
   methods: {
+    /**
+     * 把选中的隧道id传出去
+     * @param value 隧道id
+     */
     changeTunnel(value) {
       this.$emit("changeTunnel", value);
     },

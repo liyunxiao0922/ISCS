@@ -30,6 +30,7 @@
               "
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.laneIndicator, index) }"
+              @click="laneIndicatorClick(item)"
             >
               <img :src="item.imageAddress" alt="车道指示灯icon丢了" />
             </div>
@@ -44,6 +45,7 @@
               "
               :key="item.deviceId"
               :style="{ left: returnLeftValue(devObj.laneIndicator, index) }"
+              @click="laneIndicatorClick(item)"
             >
               <img :src="item.imageAddress" alt="车道指示灯icon丢了" />
             </div>
@@ -447,6 +449,7 @@ export default {
     this.scrollFn();
   },
   destroyed() {
+    // 清除机器人数据
     clearInterval(this.robotIntelTop);
     clearInterval(this.robotIntelBottom);
   },
@@ -586,7 +589,7 @@ export default {
           str = str - 10;
           shadowleft = shadowleft - shadowDistance;
         }
-        if (str > this.tunnelLengthPx-120) {
+        if (str > this.tunnelLengthPx - 120) {
           direction = 2;
         } else if (str <= 0) {
           direction = 1;
@@ -619,7 +622,7 @@ export default {
           str = str - 10;
           shadowleft = shadowleft - shadowDistance;
         }
-        if (str > this.tunnelLengthPx-120) {
+        if (str > this.tunnelLengthPx - 120) {
           direction = 2;
         } else if (str <= 0) {
           direction = 1;
@@ -681,22 +684,32 @@ export default {
       };
     },
     /**
-     * 临时停车
+     * 临时停车位置定位实现
+     * @param index 对应的停车位在同一行上的索引
      */
     parkingLeft(index) {
       return this.devRatio * index * 700 + "px";
     },
     /**
      * 风机控制操作
+     * @param item  点击的设备数据
      */
     fanClick(item) {
       this.$emit("fanClick", item);
     },
     /**
      * 灯控制操作
+     * @param item  点击的设备数据
      */
     lightingClick(item) {
       this.$emit("lightingClick", item);
+    },
+    /**
+     * 车道指示灯操作
+     * @param item  点击的设备数据
+     */
+    laneIndicatorClick(item) {
+      this.$emit("laneIndicatorClick", item);
     },
   },
 };

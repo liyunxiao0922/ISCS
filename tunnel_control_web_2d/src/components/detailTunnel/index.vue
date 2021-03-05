@@ -15,6 +15,7 @@
         :scaleData="scaleData"
         @fanClick="fanClickOpen"
         @lightingClick="lightingClickOpen"
+        @laneIndicatorClick="laneIndicatorClickOpen"
         :searchFromData="searchFromData"
       />
     </div>
@@ -28,7 +29,7 @@
     <FanModal
       v-if="fanVisible"
       :fanVisible="fanVisible"
-      :fanActiveRow="fanActiveRow"
+      :fanActiveRow="devActiveRow"
       @fanClickClose="fanClickClose"
       @fanChangeData="fanChangeData"
       :activeDevStatusList="activeDevStatusList"
@@ -36,9 +37,17 @@
     <LightingModal
       v-if="lightingVisible"
       :lightingVisible="lightingVisible"
-      :lightingActiveRow="lightingActiveRow"
+      :lightingActiveRow="devActiveRow"
       @lightingClickClose="lightingClickClose"
       @lightingChangeData="lightingChangeData"
+      :activeDevStatusList="activeDevStatusList"
+    />
+    <LaneIndicatorModal
+      v-if="laneIndicatorVisible"
+      :laneIndicatorVisible="laneIndicatorVisible"
+      :laneIndicatorActiveRow="devActiveRow"
+      @laneIndicatorClickClose="laneIndicatorClickClose"
+      @laneIndicatorChangeData="laneIndicatorChangeData"
       :activeDevStatusList="activeDevStatusList"
     />
     <GroupControlModal
@@ -59,6 +68,7 @@ import ConsoleArea from "./ConsoleArea/index";
 import Scale from "./Scale";
 import FanModal from "./ModalTemplate/FanModal";
 import LightingModal from "./ModalTemplate/LightingModal";
+import LaneIndicatorModal from "./ModalTemplate/LaneIndicatorModal";
 import GroupControlModal from "./ModalTemplate/GroupControlModal";
 
 import {
@@ -79,6 +89,7 @@ export default {
     Scale,
     FanModal,
     LightingModal,
+    LaneIndicatorModal,
     GroupControlModal,
   },
   data() {
@@ -93,12 +104,12 @@ export default {
       currentStakeNum: null, // 当前桩号
       searchFromData: null, // 查询条件
       activeDevStatusList: [], // 设备类型状态列表
+      devActiveRow: null, // 选中设备的数据
 
       // 模态框状态
       fanVisible: false, // 风机模态框是否显示
-      fanActiveRow: null, // 风机选中设备的数据
       lightingVisible: false, // 灯光模态框是否显示
-      lightingActiveRow: null, // 灯光选中设备的数据
+      laneIndicatorVisible: false, // 车道指示灯模态框是否显示
       groupControlVisible: false, // 群控策略模态框是否显示
     };
   },
@@ -217,18 +228,23 @@ export default {
     },
   },
   mounted() {
-    getTunnelList()
-      .then((response) => {
-        this.tunnelList = response.rows;
-        this.tunnelId = this.tunnelList[0].tunnelId;
-        this.getTunnelInfo();
-        this.getDevTypeList();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // 一进入页面查询隧道列表
+    this.getTunnelList();
   },
   methods: {
+    // 隧道列表
+    getTunnelList() {
+      getTunnelList()
+        .then((response) => {
+          this.tunnelList = response.rows;
+          this.tunnelId = this.tunnelList[0].tunnelId;
+          this.getTunnelInfo();
+          this.getDevTypeList();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     // 获取隧道详情
     getTunnelInfo() {
       getTunnelInfo({ tunnelId: this.tunnelId })
@@ -355,12 +371,12 @@ export default {
      */
     fanClickOpen(item) {
       this.getDevStatusList(item.deviceTypeId);
-      this.fanActiveRow = item;
+      this.devActiveRow = item;
       this.fanVisible = true;
     },
     // 风机控制关闭
     fanClickClose() {
-      this.fanActiveRow = null;
+      this.devActiveRow = null;
       this.fanVisible = false;
     },
     /**
@@ -368,7 +384,7 @@ export default {
      * @param status 要修改的风机状态
      */
     fanChangeData(status) {
-      this.changeDevTypeStatusFn(this.fanActiveRow.deviceId, status, "fan");
+      this.changeDevTypeStatusFn(this.devActiveRow.deviceId, status, "fan");
     },
     /**
      * 灯光控制打开
@@ -376,13 +392,13 @@ export default {
      */
     lightingClickOpen(item) {
       this.getDevStatusList(item.deviceTypeId);
-      this.lightingActiveRow = item;
+      this.devActiveRow = item;
 
       this.lightingVisible = true;
     },
     // 灯光控制关闭
     lightingClickClose() {
-      this.lightingActiveRow = null;
+      this.devActiveRow = null;
       this.lightingVisible = false;
     },
     /**
@@ -391,9 +407,34 @@ export default {
      */
     lightingChangeData(status) {
       this.changeDevTypeStatusFn(
-        this.lightingActiveRow.deviceId,
+        this.devActiveRow.deviceId,
         status,
         "lighting"
+      );
+    },
+    /**
+     * 车道指示灯打开
+     * @param item 选中的设备数据
+     */
+    laneIndicatorClickOpen(item) {
+      this.getDevStatusList(item.deviceTypeId);
+      this.devActiveRow = item;
+      this.laneIndicatorVisible = true;
+    },
+    // 车道指示灯关闭
+    laneIndicatorClickClose() {
+      this.devActiveRow = null;
+      this.laneIndicatorVisible = false;
+    },
+    /**
+     *  车道指示灯修改状态
+     * @param status 要修改的指示灯状态
+     */
+    laneIndicatorChangeData(status) {
+      this.changeDevTypeStatusFn(
+        this.devActiveRow.deviceId,
+        status,
+        "laneIndicator"
       );
     },
     /**
@@ -479,6 +520,8 @@ export default {
             this.fanClickClose();
           } else if (source === "lighting") {
             this.lightingClickClose();
+          } else if (source === "laneIndicator") {
+            this.laneIndicatorClickClose();
           }
           this.getDevTypeList();
         })

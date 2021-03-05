@@ -1,7 +1,7 @@
 <template>
   <el-dialog
-    title="隧道风机控制面板"
-    :visible.sync="fanVisible"
+    title="车道指示灯控制面板"
+    :visible.sync="laneIndicatorVisible"
     width="40%"
     :before-close="handleClose"
   >
@@ -20,7 +20,7 @@
         </el-col>
       </el-row>
       <h3>更改状态</h3>
-      <el-form-item label="运行状态:">
+      <el-form-item label="灯光亮度:">
         <el-radio-group v-model="form.workStatus" size="small">
           <el-radio-button
             v-for="item in activeDevStatusList"
@@ -32,7 +32,9 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button size="smail" @click="$emit('fanClickClose')">取 消</el-button>
+      <el-button size="smail" @click="$emit('laneIndicatorClickClose')"
+        >取 消</el-button
+      >
       <el-button size="smail" type="primary" @click="saveWorkStatusFn"
         >确 定</el-button
       >
@@ -43,11 +45,11 @@
 <script>
 export default {
   props: {
-    fanVisible: {
+    laneIndicatorVisible: {
       type: Boolean,
       default: false,
     },
-    fanActiveRow: {
+    laneIndicatorActiveRow: {
       type: Object,
     },
     activeDevStatusList: {
@@ -61,7 +63,7 @@ export default {
     };
   },
   watch: {
-    fanActiveRow: {
+    laneIndicatorActiveRow: {
       immediate: true,
       deep: true,
       handler(newValue) {
@@ -85,31 +87,13 @@ export default {
      * 关闭菜单
      */
     handleClose() {
-      this.$emit("fanClickClose");
+      this.$emit("laneIndicatorClickClose");
     },
     /**
      * 修改状态接口
      */
     saveWorkStatusFn() {
-       if (this.fanActiveRow.workStatus === "0011") {
-        if (this.form.workStatus === "0011") {
-          this.$emit("fanClickClose");
-        } else if (this.form.workStatus === "0020") {
-          this.$message.error("操作不允许,必须停止才可以反向转动");
-        } else {
-          this.$emit("fanChangeData", this.form.workStatus);
-        }
-      } else if (this.fanActiveRow.workStatus === "0020") {
-        if (this.form.workStatus === "0011") {
-          this.$message.error("操作不允许,必须停止才可以正向转动");
-        } else if (this.form.workStatus === "0020") {
-          this.$emit("fanClickClose");
-        } else {
-          this.$emit("fanChangeData", this.form.workStatus);
-        }
-      } else {
-        this.$emit("fanChangeData", this.form.workStatus);
-      }
+      this.$emit("laneIndicatorChangeData", this.form.workStatus);
     },
   },
 };
