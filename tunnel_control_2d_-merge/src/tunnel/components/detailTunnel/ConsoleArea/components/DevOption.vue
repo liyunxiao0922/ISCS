@@ -29,7 +29,7 @@
   <ul class="robotmonitorBox" v-else-if="equipmentOperation === 'monitor'">
       <li>
         <span>上行入口</span>
-        <video @click="showVideo(videoUrl[0])" id="demo" controls="controls" :src="videoUrl[0]" autoplay="autoplay" loop muted />
+        <video @click="showVideo(videoUrl[1])" id="demo" controls="controls" :src="videoUrl[1]" autoplay="autoplay" loop muted />
       </li>
       <li>
         <span>下行入口</span>
@@ -37,7 +37,7 @@
       </li>
       <li>
         <span>自定义1</span>
-        <video @click="showVideo(videoUrl[0])" id="demo" controls="controls" :src="videoUrl[0]" autoplay="autoplay" loop muted />
+        <video @click="showVideo(videoUrl[1])" id="demo" controls="controls" :src="videoUrl[1]" autoplay="autoplay" loop muted />
       </li>
       <li>
         <span>自定义2</span>

@@ -369,21 +369,37 @@ export default {
               if(this.informationtextup != element.information || this.informationcolorup != element.fontColor){
                 this.informationtextup = element.information;
                 this.informationcolorup = element.fontColor;
-                this.devObj.informationBoard.upList[0].information = element.information
-                this.devObj.informationBoard.upList[0].fontColor = element.fontColor
+                if(this.devObj.informationBoard.upList.length != 0){
+                  this.devObj.informationBoard.upList[0].information = element.information
+                  this.devObj.informationBoard.upList[0].fontColor = element.fontColor
+                } else {
+                  this.devObj.informationBoard.upList[0] = element;
+                }
               } else {
-                this.devObj.informationBoard.upList[0].information = this.informationtextup
-                this.devObj.informationBoard.upList[0].fontColor = this.informationcolorup
+                if(this.devObj.informationBoard.upList.length != 0){
+                  this.devObj.informationBoard.upList[0].information = this.informationtextup
+                  this.devObj.informationBoard.upList[0].fontColor = this.informationcolorup
+                } else {
+                  this.devObj.informationBoard.upList[0] = element;
+                }
               }
             } else {
               if(this.informationtextdown != element.information || this.informationcolordown != element.fontColor){
                 this.informationtextdown = element.information;
                 this.informationcolordown = element.fontColor;
-                this.devObj.informationBoard.downList[0].information = element.information
-                this.devObj.informationBoard.downList[0].fontColor = element.fontColor
+                if(this.devObj.informationBoard.downList.length!=0){
+                  this.devObj.informationBoard.downList[0].information = element.information
+                  this.devObj.informationBoard.downList[0].fontColor = element.fontColor
+                } else {
+                  this.devObj.informationBoard.downList[0] = element;
+                }
               } else {
-                this.devObj.informationBoard.downList[0].information = this.informationtextdown
-                this.devObj.informationBoard.downList[0].fontColor = this.informationcolordown
+                if(this.devObj.informationBoard.downList.length!=0){
+                  this.devObj.informationBoard.downList[0].information = this.informationtextdown
+                  this.devObj.informationBoard.downList[0].fontColor = this.informationcolordown
+                } else {
+                  this.devObj.informationBoard.downList[0] = element;
+                }
               }
             }
           })
@@ -395,7 +411,6 @@ export default {
     // 一进入页面查询隧道列表
     this.getTunnelList();
     /* this.$nextTick(() => {
-      console.log(11111111)
       this.$refs.robot.robotRight();
       this.$refs.robot.robotLeft();
     }) */
@@ -482,7 +497,6 @@ export default {
       getTunnelList()
         .then((response) => {
           if(!localStorage.getItem('tunnelId')){
-            console.log(2222222)
             localStorage.setItem("tunnelId", response.data[0].tunnelId);
             this.tunnelId = response.data[0].tunnelId;
             this.tunnelLeng = response.data[0].tunnelLength;
@@ -548,8 +562,8 @@ export default {
         .then((response) => {
           this.tunnelInfo = [];
           this.tunnelInfo = response.data;
-          this.getDevListInfo();
           this.getInformationBoardlist();
+          this.getDevListInfo();
           //setTimeout(() => {
             this.currentStakeNum = 'k36+000';
             /* this.scaleData =
@@ -606,7 +620,7 @@ export default {
         });
     },
     // 获取设备详情列表
-    getDevListInfo() {
+    async getDevListInfo() {
       if(this.devInfoList.length != 0 && this.tunnelInfo.length != 0) {
         this.devInfoList.map((item) => {
           this.tunnelInfo.map((v) => {
@@ -646,7 +660,6 @@ export default {
       infoBoardStatistics()
         .then((response) => {
           this.InfoBoardlist = response.data;
-          
         })
         .catch((error) => {
           console.log(error);

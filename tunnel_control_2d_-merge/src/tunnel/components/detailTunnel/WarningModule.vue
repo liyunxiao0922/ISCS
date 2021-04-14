@@ -53,9 +53,9 @@
               1车道001监控画面
             </div>
             <video
-              @click="$refs.videoShow.show(videoUrl[0])"
+              @click="$refs.videoShow.show(videoUrl[1])"
               id="demo"
-              :src="videoUrl[0]"
+              :src="videoUrl[1]"
               controls="controls"
               autoplay="autoplay"
               loop
@@ -83,10 +83,10 @@
               2车道001监控画面
             </div>
             <video
-              @click="$refs.videoShow.show(videoUrl[0])"
+              @click="$refs.videoShow.show(videoUrl[1])"
               id="demo"
               controls="controls"
-              :src="videoUrl[0]"
+              :src="videoUrl[1]"
               autoplay="autoplay"
               loop
               muted
@@ -97,7 +97,7 @@
               2车道002监控画面
             </div>
             <video
-              @click="$refs.videoShow.show(videoUrl[0])"
+              @click="$refs.videoShow.show(videoUrl[1])"
               id="demo"
               controls="controls"
               :src="videoUrl[1]"
