@@ -1,0 +1,1232 @@
+@keyframes positiveRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateReverse {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes mymove {
+  0% {
+    transform: scale(5);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes maintainOpacity {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.main_drawingBox {
+  width: 100%;
+  height: 100%;
+
+  .main_drawingContext {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .tunnelBackgroundBorder_imgBox {
+      // display: none;// ss
+      width: 190px;
+      height: 100%;
+      flex-shrink: 0;
+
+      &>img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .mainContext {
+      /* >*:not(.mainOptionBox) {
+        display: none;
+      } */
+      width: 100%;
+      height: 100%;
+      position: relative;
+      flex-shrink: 0;
+      .background_imgBox {
+        width: 100%;
+        height: 1000px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        background-image: url("./assets/img/tunnelBackground.png");
+        background-size: auto 100%;
+      }
+
+      .mainOptionBox {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        margin-left: -58px;
+        /* >*:not(.robotUpBox, .robotDownBox) {
+          display: none;// ss
+        } */
+        .itemBox {
+          position: absolute;
+          // left: 28px;
+          width: 100%;
+
+          // display: flex;
+          // justify-content: space-around;
+          // 车行通道
+          &.passagewayBox {
+            top: 405px;
+
+            .passagewayItem {
+              width: 110px;
+              position: absolute;
+              top: 0;
+              z-index: 1;
+              &.isSearch {
+                animation: mymove 1s ease-in-out;
+              }
+
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          // 车
+          &.phoneupBox {
+            top: 64px;
+
+            .phoneItem {
+              width: 24px;
+              position: absolute;
+              top: 0;
+              z-index: 1;
+              &.isSearch {
+                animation: mymove 1s ease-in-out;
+              }
+
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          &.phonedownBox {
+            top: 914px;
+      
+            .phoneItem {
+              width: 24px;
+              position: absolute;
+              top: 0;
+              z-index: 1;
+              &.isSearch {
+                animation: mymove 1s ease-in-out;
+              }
+
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          .robotDownBox {
+            left: -200px;
+          }
+          .informationBoard{
+            width: 100%;
+            height: 100%;
+            white-space:nowrap;
+            background-color: #191d21;
+            overflow: hidden;
+          }
+          .describe {
+            position: absolute;
+            left: 94px;
+            top: 62px;
+            color: #666;
+            width: 14px;
+            font-size: 12px;
+          }
+          .describe0{
+            position: absolute;
+            left: 45px;
+            top: 62px;
+            color: #666;
+            width: 14px;
+            font-size: 12px;
+          }
+          // 情报板
+          .informationBoardItem {
+            width: 276px;
+            height: 50px;
+            position: absolute;
+            top: 85px;
+            margin-left: -148px;
+            z-index: 10;
+            background-color: #232629;
+            box-shadow: inset 0 0 7px 1px #363a3e;
+            padding: 5px;
+            overflow: hidden;
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+            
+            .informationContext {
+              display: inline-block;
+              // width: 100%;
+              white-space:nowrap;
+              height: 100%;
+              // writing-mode: tb-rl;
+              text-align: left;
+              line-height: 40px;
+              color: #FADD55;
+              font-size: 18px;
+            }
+            .maxSpeed {
+              width: 30px;
+              height: 30px;
+              border-radius: 15px;
+              display: inline-block;
+              border: 1px solid #FF2300;
+              align-self: center;
+              text-align: center;
+              line-height: 28px;
+              color: #ff2300;
+            }
+          }
+
+          &.informationBoardUpBox {
+            top: 125px;
+          }
+
+          &.informationBoardDownBox {
+            top: 656px;
+          }
+
+          // 车道指示器
+          .laneIndicatorItem {
+            width: 36px;
+            height: 20px;
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            z-index: 999;
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          &.laneIndicatorUpBox {
+            top: 184px;
+          }
+
+          &.laneIndicatorDownBox {
+            top: 757px;
+
+            .laneIndicatorItem {
+              transform: rotate(180deg);
+            }
+          }
+
+          // 隧道风机
+          &.tunnelFanUpBox {
+            top: 222px;
+          }
+
+          &.tunnelFanDownBox {
+            top: 756px;
+          }
+
+          .tunnelFanItem {
+            width: 23px;
+            height: 23px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+
+            &.positive {
+              animation: positiveRotate 3s linear infinite;
+            }
+
+            &.stop {
+              animation: none;
+            }
+
+            &.reverse {
+              animation: rotateReverse 3s linear infinite;
+            }
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            cursor: pointer;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          // 灯光
+          &.lightingUpBox {
+            top: 388px;
+          }
+
+          &.lightingDownBox {
+            top: 600px;
+          }
+
+          .lightingItem {
+            width: 40px;
+            height: 15px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+            cursor: pointer;
+       
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            // img {
+            //   width: 100%;
+            //   height: 100%;
+            // }
+
+            img {
+              width: 35px;
+            }
+          }
+
+          // 信号灯
+          .signalLampItem {
+            width: 18px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          &.signalLampUpBox {
+            top: 66px;
+          }
+          &.coviUpBox {
+            top: 98px;
+          }
+          &.cameraUpBox {
+            top: 66px;
+          }
+          &.cameraUpBox1 {
+            top: 382px;
+          }
+          &.signalLampDownBox {
+            top: 918px;
+
+            .signalLampItem {
+              transform: rotate(180deg);
+            }
+          }
+          &.coviDownBox {
+            top: 884px;
+          }
+          &.cameraDownBox {
+            top: 914px;
+          }
+          &.cameraDownBox1 {
+            top: 597px
+          }
+          // 亮度检测器
+          .brightnessDetectorItem {
+            width: 67px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            .brightnessDetectorItemContext {
+              display: inline-block;
+              color: #fff;
+              font-size: 10px;
+              margin: 0;
+              width: auto;
+              margin-left: 5px;
+              line-height: 20px;
+              vertical-align: middle;
+            }
+
+            img {
+              width: 15px;
+              height: auto;
+              vertical-align: middle;
+            }
+          }
+
+          &.brightnessDetectorUpBox {
+            top: 96px;
+          }
+
+          &.brightnessDetectorDownBox {
+            top: 880px;
+          }
+
+          // 照度检测器
+          .illuminanceDetectorItem {
+            width: 78px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            .illuminanceDetectorItemContext {
+              display: inline-block;
+              color: #fff;
+              font-size: 10px;
+              margin: 0;
+              width: 40px;
+              margin-left: 5px;
+              line-height: 1;
+              vertical-align: middle;
+            }
+
+            img {
+              width: 15px;
+              height: 100%;
+              vertical-align: middle;
+            }
+          }
+
+          &.illuminanceDetectorUpBox {
+            top: 96px;
+          }
+
+          &.illuminanceDetectorDownBox {
+            top: 880px;
+          }
+
+          // 风速风向仪
+          .anemoclinographItem {
+            width: 78px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            .anemoclinographItemContext {
+              display: inline-block;
+              color: #fff;
+              font-size: 10px;
+              margin: 0;
+              width: 50px;
+              margin-left: 5px;
+              line-height: 12px;
+              vertical-align: middle;
+            }
+
+            img {
+              width: 15px;
+              height: 100%;
+              vertical-align: top;
+              margin-top: 1px;
+            }
+          }
+
+          &.anemoclinographUpBox {
+            top: 96px;
+          } 
+
+          &.anemoclinographDownBox {
+            top: 885px;
+          }
+
+          // 车辆检测器
+          .vehicleDetectorItem {
+            width: 25px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+            cursor: pointer;
+            
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          &.vehicleDetectorUpBox {
+            top: 96px;
+          }
+
+          &.vehicleDetectorDownBox {
+            top: 885px
+          }
+
+          // 机器人
+          .robotItem {
+            width: 93px;
+            height: 24px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+            cursor: pointer;
+            
+            .maintain{
+              width: 20px;
+              height: auto;
+              position: absolute;
+              top: 1px;
+              right: 38px;
+              animation: maintainOpacity 1s linear infinite;
+            }
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          &.robotUpBox {
+            top: 96PX;
+          }
+
+          &.robotDownBox {
+            bottom: 114PX;
+          }
+
+          // 临时停车
+          .parkingItem {
+            width: 295.5px;
+            height: 44.4px;
+            position: absolute;
+            top: -5px;
+            z-index: 99;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          &.parkingUpBox {
+            top: 0;
+            z-index: 99;
+          }
+
+          &.parkingDownBox {
+            bottom: 55px;
+          }
+        }
+      }
+      .warningtextup{
+        position: absolute;
+        top: 219px;
+      }
+    }
+    .mainContext1 {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      flex-shrink: 0;
+      .background_imgBox {
+        width: 100%;
+        height: 1000px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        background-image: url("./assets/img/tunnelBackground3D.png");
+        background-size: auto 100%;
+      }
+
+      .mainOptionBox {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        margin-left: -58px;
+        /* >*:not(.robotUpBox, .robotDownBox) {
+          display: none;// ss
+        } */
+        .itemBox {
+          position: absolute;
+          // left: 28px;
+          width: 100%;
+
+          // display: flex;
+          // justify-content: space-around;
+          // 车行通道
+          &.passagewayBox {
+            top: 424px;
+
+            .passagewayItem {
+              width: 87px;
+              position: absolute;
+              top: 0;
+              z-index: 1;
+              &.isSearch {
+                animation: mymove 1s ease-in-out;
+              }
+
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          // 车
+          &.phoneupBox {
+            top: 64px;
+
+            .phoneItem {
+              width: 24px;
+              position: absolute;
+              top: 0;
+              z-index: 1;
+              &.isSearch {
+                animation: mymove 1s ease-in-out;
+              }
+
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          &.phonedownBox {
+            top: 914px;
+      
+            .phoneItem {
+              width: 24px;
+              position: absolute;
+              top: 0;
+              z-index: 1;
+              &.isSearch {
+                animation: mymove 1s ease-in-out;
+              }
+
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          .robotDownBox {
+            left: -200px;
+          }
+          .informationBoard{
+            width: 100%;
+            height: 100%;
+            white-space:nowrap;
+            background-color: #191d21;
+            overflow: hidden;
+          }
+          .describe {
+            position: absolute;
+            left: 85px;
+            top: 50px;
+            color: #666;
+            width: 14px;
+            font-size: 12px;
+          }
+          .describe0{
+            position: absolute;
+            left: 45px;
+            top: 50px;
+            color: #666;
+            width: 14px;
+            font-size: 12px;
+          }
+          // 情报板
+          .informationBoardItem {
+            width: 276px;
+            height: 50px;
+            position: absolute;
+            top: 85px;
+            margin-left: -148px;
+            z-index: 10;
+            background-color: #232629;
+            box-shadow: inset 0 0 7px 1px #363a3e;
+            padding: 5px;
+            overflow: hidden;
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+            
+            .informationContext {
+              display: inline-block;
+              // width: 100%;
+              white-space:nowrap;
+              height: 100%;
+              // writing-mode: tb-rl;
+              text-align: left;
+              line-height: 40px;
+              color: #FADD55;
+              font-size: 18px;
+            }
+            .maxSpeed {
+              width: 30px;
+              height: 30px;
+              border-radius: 15px;
+              display: inline-block;
+              border: 1px solid #FF2300;
+              align-self: center;
+              text-align: center;
+              line-height: 28px;
+              color: #ff2300;
+            }
+          }
+
+          &.informationBoardUpBox {
+            top: 145px;
+          }
+
+          &.informationBoardDownBox {
+            top: 646px;
+          }
+
+          // 车道指示器
+          .laneIndicatorItem {
+            width: 36px;
+            height: 20px;
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            z-index: 999;
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          &.laneIndicatorUpBox {
+            top: 166px;
+          }
+
+          &.laneIndicatorDownBox {
+            top: 716px;
+
+            .laneIndicatorItem {
+              transform: rotate(180deg);
+            }
+          }
+
+          // 隧道风机
+          &.tunnelFanUpBox {
+            top: 235px;
+          }
+
+          &.tunnelFanDownBox {
+            top: 744px;
+          }
+
+          .tunnelFanItem {
+            width: 23px;
+            height: 23px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+
+            &.positive {
+              animation: positiveRotate 3s linear infinite;
+            }
+
+            &.stop {
+              animation: none;
+            }
+
+            &.reverse {
+              animation: rotateReverse 3s linear infinite;
+            }
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            cursor: pointer;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          // 灯光
+          &.lightingUpBox {
+            top: 407px;
+          }
+
+          &.lightingDownBox {
+            top: 577px;
+          }
+
+          .lightingItem {
+            width: 40px;
+            height: 15px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+            cursor: pointer;
+       
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            // img {
+            //   width: 100%;
+            //   height: 100%;
+            // }
+
+            img {
+              width: 35px;
+            }
+          }
+
+          // 信号灯
+          .signalLampItem {
+            width: 18px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          &.signalLampUpBox {
+            top: 66px;
+          }
+          &.coviUpBox {
+            top: 98px;
+          }
+          &.cameraUpBox {
+            top: 66px;
+          }
+          &.cameraUpBox1 {
+            top: 400px;
+          }
+          &.signalLampDownBox {
+            top: 918px;
+
+            .signalLampItem {
+              transform: rotate(180deg);
+            }
+          }
+          &.coviDownBox {
+            top: 884px
+          }
+          &.cameraDownBox {
+            top: 914px;
+          }
+          &.cameraDownBox1 {
+            top: 575px
+          }
+          // 亮度检测器
+          .brightnessDetectorItem {
+            width: 67px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            .brightnessDetectorItemContext {
+              display: inline-block;
+              color: #fff;
+              font-size: 10px;
+              margin: 0;
+              width: auto;
+              margin-left: 5px;
+              line-height: 20px;
+              vertical-align: middle;
+            }
+
+            img {
+              width: 15px;
+              height: auto;
+              vertical-align: middle;
+            }
+          }
+
+          &.brightnessDetectorUpBox {
+            top: 96px;
+          }
+
+          &.brightnessDetectorDownBox {
+            top: 880px;
+          }
+
+          // 照度检测器
+          .illuminanceDetectorItem {
+            width: 78px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            .illuminanceDetectorItemContext {
+              display: inline-block;
+              color: #fff;
+              font-size: 10px;
+              margin: 0;
+              width: 40px;
+              margin-left: 5px;
+              line-height: 1;
+              vertical-align: middle;
+            }
+
+            img {
+              width: 15px;
+              height: 100%;
+              vertical-align: middle;
+            }
+          }
+
+          &.illuminanceDetectorUpBox {
+            top: 96px;
+          }
+
+          &.illuminanceDetectorDownBox {
+            top: 880px;
+          }
+
+          // 风速风向仪
+          .anemoclinographItem {
+            width: 78px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            .anemoclinographItemContext {
+              display: inline-block;
+              color: #fff;
+              font-size: 10px;
+              margin: 0;
+              width: 50px;
+              margin-left: 5px;
+              line-height: 12px;
+              vertical-align: middle;
+            }
+
+            img {
+              width: 15px;
+              height: 100%;
+              vertical-align: top;
+              margin-top: 1px;
+            }
+          }
+
+          &.anemoclinographUpBox {
+            top: 96px;
+          } 
+
+          &.anemoclinographDownBox {
+            top: 885px;
+          }
+
+          // 车辆检测器
+          .vehicleDetectorItem {
+            width: 25px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+            cursor: pointer;
+            
+            &.isSearch {
+              animation: mymove 1s ease-in-out;
+            }
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          &.vehicleDetectorUpBox {
+            top: 96px;
+          }
+
+          &.vehicleDetectorDownBox {
+            top: 885px
+          }
+
+          // 机器人
+          .robotItem {
+            width: 93px;
+            height: 24px;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+            cursor: pointer;
+            
+            .maintain{
+              width: 20px;
+              height: auto;
+              position: absolute;
+              top: 1px;
+              right: 38px;
+              animation: maintainOpacity 1s linear infinite;
+            }
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          &.robotUpBox {
+            top: 96PX;
+          }
+
+          &.robotDownBox {
+            bottom: 114PX;
+          }
+
+          // 临时停车
+          .parkingItem {
+            width: 295.5px;
+            height: 61.4px;
+            position: absolute;
+            top: 2px;
+            z-index: 99;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          &.parkingUpBox {
+            top: 0;
+            z-index: 99;
+          }
+
+          &.parkingDownBox {
+            bottom: 55px;
+          }
+        }
+      }
+    }
+    .tunnelEntrance {
+      position: absolute;
+      top: 30px;
+      height: 93%;
+      width: 200px;
+      opacity: 0.5;
+      z-index: 2;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+
+      &.entrance {
+        left: 0;
+      }
+
+      &.export {
+        right: 0;
+      }
+    }
+
+    .scaleBox {
+      position: absolute;
+      bottom: 34px;
+      padding: 0 136px;
+      height: 50px;
+      width: 100%;
+      z-index: 99;
+    }
+
+    .scaleTop {
+      position: absolute;
+      top: 35px;
+      padding: 0 136px;
+      height: 50px;
+      width: 100%;
+      z-index: 99;
+    }
+  }
+
+  .scrollBox {
+    height: 16px;
+    width: 100%;
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    border-radius: 20px;
+    // background: linear-gradient(to right, #1a233e 50%, #564c07 50%);
+    background: #4C4C4C;
+    background-size: 30px 100%;
+    .mask {
+      width: 100%;
+      height: 8px;
+      // background-color: rgba(255, 255, 255, 0.2);
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+
+      .robotBottom {
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 999;
+        width: 8px;
+        height: 8px;
+        background-color: #f00;
+        border-radius: 50%;
+        z-index: 1;
+      }
+    }
+
+    .robotTop {
+      position: absolute;
+      left: 0;
+      top: 0;
+z-index: 999;
+      width: 8px;
+      height: 8px;
+      background-color: #f00;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .scrollBtn {
+      width: 40px;
+      height: 22px;
+      background-color: rgba(122, 122, 122, 0.2);
+      position: absolute;
+      left: 0;
+      top: -5px;
+      border-radius: 3px;
+      cursor: pointer;
+
+      .scrollBtnMask {
+        width: 100%;
+        height: 20px;
+        margin: 3px 0;
+        background-color: #3d3f3e;
+        text-align: center;
+
+        .scrollContext {
+          line-height: 20px;
+          color: #fff;
+          font-size: 13px;
+        }
+      }
+
+      .tooltipBox {
+        position: absolute;
+        bottom: 50px;
+        width: 100px;
+        height: 30px;
+        left: 50%;
+        margin-left: -40px;
+        background-color: #3d3f3e;
+        border-radius: 5px;
+        border: 1px solid #fff;
+        color: #fff;
+        text-align: center;
+        line-height: 28px;
+        display: none;
+
+        &::after {
+          content: "";
+          position: absolute;
+          width: 0px;
+          height: 0;
+          bottom: -10px;
+          left: 30px;
+          border-top: 10px solid #fff;
+          border-right: 10px solid transparent;
+          border-left: 10px solid transparent;
+        }
+      }
+
+      &:hover .tooltipBox {
+        display: block;
+      }
+
+      &:hover .scrollContext {
+        display: none;
+      }
+    }
+  }
+}
+.vehicleDetectorItemContent{
+  width: 158px;
+}

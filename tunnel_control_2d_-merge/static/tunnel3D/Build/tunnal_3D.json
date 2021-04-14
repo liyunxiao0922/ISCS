@@ -1,0 +1,16 @@
+{
+"companyName": "DefaultCompany",
+"productName": "隧道设备三维仿真系统",
+"productVersion": "0.1",
+"dataUrl": "tunnal_3D.data.unityweb",
+"wasmCodeUrl": "tunnal_3D.wasm.code.unityweb",
+"wasmFrameworkUrl": "tunnal_3D.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.21f1c1"
+}

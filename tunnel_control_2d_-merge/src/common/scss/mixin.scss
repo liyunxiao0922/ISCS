@@ -1,0 +1,78 @@
+.shape-bottom-right::before {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 2px;
+  background: #3d6eff;
+  right: -6px;
+  bottom: -7px;
+}
+
+.shape-bottom-right::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 20px;
+  background: #3d6eff;
+  right: -6px;
+  bottom: -6px;
+}
+
+.shape-bottom-left::before {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 2px;
+  background: #3d6eff;
+  left: -2px;
+  bottom: -6px;
+}
+
+.shape-bottom-left::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 20px;
+  background: #3d6eff;
+  left: -2px;
+  bottom: -6px;
+}
+.shape-top-right::before {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 2px;
+  background: #3d6eff;
+  right: -6px;
+  top: -2px;
+}
+
+.shape-top-right::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 20px;
+  background: #3d6eff;
+  right: -6px;
+  top: -2px;
+}
+
+.shape-top-left::before {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 2px;
+  background: #3d6eff;
+  left: -2px;
+  top: -2px;
+}
+
+.shape-top-left::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 20px;
+  background: #3d6eff;
+  left: -2px;
+  top: -2px;
+}
