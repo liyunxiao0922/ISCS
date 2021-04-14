@@ -550,12 +550,12 @@ export default {
 <style lang="scss">
 .info-container {
   position: relative;
-  width: 450px;
-  height: 500px;
+  width: 350px;
+  height: 400px;
   background: rgba(45, 60, 99, 1);
   display: flex;
   flex-direction: column;
-  font-size: 18px;
+  font-size: 14px;
   border-left: 1px solid rgb(88, 207, 255);
   &:before {
     content: '';
@@ -604,14 +604,14 @@ export default {
         margin-right: 10px;
         &:first-child {
           display: inline-block;
-          width: 14px;
-          height: 14px;
+          width: 12px;
+          height: 12px;
           border-radius: 7px;
           background: chartreuse;
           color: chartreuse;
         }
         &:nth-child(2) {
-          font-size: 14px;
+          font-size: 12px;
           color: chartreuse;
         }
       }
@@ -619,7 +619,7 @@ export default {
   }
   .content-wrapper {
     width: 100%;
-    padding: 5px 10px 0px 10px;
+    padding: 0 10px 5px 10px;
     height: 20px;
     position: relative;
     span {
@@ -634,35 +634,35 @@ export default {
       left: 20%;
       top: 5px;
       .el-progress__text {
-        font-size: 14px;
+        font-size: 12px;
         color: #fff;
       }
     }
   }
   .station-wrapper {
-    margin: 5px 10px;
-    height: 30px;
-    line-height: 30px;
+    margin: 2px 10px;
+    height: 26px;
+    line-height: 26px;
     border: 1px solid rgb(22, 30, 52);
     display: flex;
     justify-content: space-between;
     span {
       padding: 0 10px;
-      font-size: 14px;
+      font-size: 12px;
       color: #fff;
     }
   }
   .param-wrapper {
     margin: 5px 10px;
-    height: 30px;
-    line-height: 30px;
+    height: 26px;
+    line-height: 26px;
     display: flex;
     justify-content: space-between;
     section {
       border: 1px solid rgb(22, 30, 52);
       flex: 1;
       padding: 0 10px;
-      font-size: 14px;
+      font-size: 12px;
       color: #fff;
       display: flex;
       justify-content: space-between;
@@ -685,12 +685,12 @@ export default {
     position: relative;
     .construction-header {
       position: absolute;
-      top: 10px;
+      top: 0;
       left: 1px;
       display: inline-block;
       width: calc(100% - 2px);
-      height: 35px;
-      line-height: 35px;
+      height: 30px;
+      line-height: 30px;
       background: rgba(13, 64, 113, 1);
       display: flex;
       flex-direction: row;
@@ -721,7 +721,7 @@ export default {
     }
     .warp {
       position: relative;
-      top: 50px;
+      top: 33px;
       height: 200px;
       width: 100%;
       overflow: hidden;
@@ -735,11 +735,11 @@ export default {
         li, a {
           width: 100%;
           display: block;
-          height: 40px;
-          line-height: 40px;
+          height: 30px;
+          line-height: 30px;
           display: flex;
           justify-content: space-between;
-          font-size: 14px;
+          font-size: 12px;
           span {
             padding: 0 5px;
             &:first-child {
@@ -796,7 +796,7 @@ export default {
     }
     .info-content {
       text-align: center;
-      font-size: 22px;
+      font-size: 20px;
       background: #000;
       color: #F56C6C;
     }
@@ -825,7 +825,7 @@ export default {
     display: flex;
     justify-content: space-between;
     span {
-      font-size: 14px;
+      font-size: 12px;
       color: rgb(244, 223, 88);
       &:nth-child(2) {
         color: rgb(88, 207, 255);
@@ -939,15 +939,15 @@ export default {
     .info-wrapper {
       cursor: move;
       position: absolute;
-      top: 613px;
-      right: 389px;
+      top: 610px;
+      right: 393px;
       width: 126px;
       height: 126px;
       background: rgb(17, 23, 35);
       box-shadow: 0 0 38px rgb(30, 60, 99) inset;
       display: flex;
       flex-direction: column;
-      z-index: 11;
+      z-index: 1300;
       justify-content: center;
       align-items: center;
       p {

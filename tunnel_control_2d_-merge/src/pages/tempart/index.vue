@@ -92,20 +92,20 @@ export default {
     handleFold (val) {
       console.log(this.$refs.temWrapper);
       if (val === 0 || val === 1 || val === 2) {
-        this.$refs.content.style = 'display:none;';
+        this.$refs.content.style = 'display:none;z-index: 1';
         this.$refs.wrapper.style = 'width: 10px;';
         this.collapse = false;
         this.$emit('handlePos', {collapse: this.collapse, ind: val});
       } else if (val === 3 || val === 4 || val === 5) {
-        this.$refs.content.style = 'display:none;';
+        this.$refs.content.style = 'display:none;z-index: 1';
         this.$refs.wrapper.style = 'height: 10px';
-        this.$refs.temWrapper.style = 'transform:translateY(316px);height: 10px;border-left: none; border-bottom: 1px solid rgb(88, 207, 255)';
+        this.$refs.temWrapper.style = 'height: 10px;border-left: none; border-bottom: 1px solid rgb(88, 207, 255)';
         this.collapse = false;
         this.$emit('handlePos', {collapse: this.collapse, ind: val});
       } else if (val === 6 || val === 7 || val === 8) {
-        this.$refs.content.style = 'display:none;';
+        this.$refs.content.style = 'display:none;z-index: 1';
         this.$refs.wrapper.style = 'width: 10px';
-        this.$refs.temWrapper.style = 'transform:translateX(365px);width: 10px;border-left: none; border-right: 1px solid rgb(88, 207, 255)';
+        this.$refs.temWrapper.style = 'width: 10px;border-left: none; border-right: 1px solid rgb(88, 207, 255)';
         this.collapse = false;
         this.$emit('handlePos', {collapse: this.collapse, ind: val});
       }
@@ -163,13 +163,13 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  z-index: 2001;
+  z-index: 1;
   border-left: 1px solid rgb(88, 207, 255);
   // background: #0c1943;
   .title {
     position: relative;
-    height: 42px;
-    line-height: 42px;
+    height: 36px;
+    line-height: 36px;
     padding: 0 10px;
     color: rgba(244, 223, 88, 1);
     background: linear-gradient(90deg, #0d4071 60%, rgba(46, 143, 249, .1));
@@ -215,7 +215,7 @@ export default {
       &:before {
         content: '';
         position: absolute;
-        top: 12px;
+        top: 10px;
         left: 0;
         width: 4px;
         height: 20px;
@@ -249,7 +249,7 @@ export default {
     cursor: pointer;
     i {
       color: #17abe3;
-      font-size: 42px;
+      font-size: 40px;
     }
     // color:white;
   }
@@ -258,11 +258,11 @@ export default {
     font-size: 22px;
     position: absolute;
     left: 50%;
-    bottom: calc(100% - 8px);
+    bottom: calc(100% - 6px);
     cursor: pointer;
     i {
       color: #17abe3;
-      font-size: 42px;
+      font-size: 40px;
     }
   }
   .right-btn {
@@ -274,7 +274,7 @@ export default {
     cursor: pointer;
     i {
       color: #17abe3;
-      font-size: 42px;
+      font-size: 40px;
     }
   }
 }

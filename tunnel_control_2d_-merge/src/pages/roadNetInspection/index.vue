@@ -130,23 +130,23 @@ export default {
     handlePos (param) {
       console.log(param);
       this.param = param;
-      // if (!param.collapse) {
-      //   if ([0, 1, 2].includes(param.ind)) {
-      //     this.$refs.content[param.ind].style = 'width: 10px;';
-      //   } else if ([3, 4, 5].includes(param.ind)) {
-      //     this.$refs.content[param.ind].style = 'height: 10px;border-left: none; border-bottom: 1px solid rgb(88, 207, 255)';
-      //   } else if ([6, 7, 8].includes(param.ind)) {
-      //     this.$refs.content[param.ind].style = 'width: 10px;border-left: none; border-right: 1px solid rgb(88, 207, 255)';
-      //   }
-      // } else {
-      //   if ([0, 1, 2].includes(param.ind)) {
-      //     this.$refs.content[param.ind].style = 'display: block;width: 375px;';
-      //   } else if ([3, 4, 5].includes(param.ind)) {
-      //     this.$refs.content[param.ind].style = 'display: block;height: 326px;';
-      //   } else if ([6, 7, 8].includes(param.ind)) {
-      //     this.$refs.content[param.ind].style = 'display: block; width: 375px;';
-      //   }
-      // }
+      if (!param.collapse) {
+        if ([0, 1, 2].includes(param.ind)) {
+          this.$refs.content[param.ind].style = 'width: 10px;';
+        } else if ([3, 4, 5].includes(param.ind)) {
+          this.$refs.content[param.ind].style = 'height: 10px;border-left: none; border-bottom: 1px solid rgb(88, 207, 255)';
+        } else if ([6, 7, 8].includes(param.ind)) {
+          this.$refs.content[param.ind].style = 'width: 10px;border-left: none; border-right: 1px solid rgb(88, 207, 255)';
+        }
+      } else {
+        if ([0, 1, 2].includes(param.ind)) {
+          this.$refs.content[param.ind].style = 'display: block;width: 375px;';
+        } else if ([3, 4, 5].includes(param.ind)) {
+          this.$refs.content[param.ind].style = 'display: block;height: 326px;';
+        } else if ([6, 7, 8].includes(param.ind)) {
+          this.$refs.content[param.ind].style = 'display: block; width: 375px;';
+        }
+      }
     },
     handleClose () {
       this.dialogVisible = false;

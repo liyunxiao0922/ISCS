@@ -1457,7 +1457,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-select-dropdown {
+/deep/ .el-select-dropdown {
   background: #095379;
   border: none;
 }
@@ -1471,8 +1471,8 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      width: 4px;
-      height: 26px;
+      width: 3px;
+      height: 33px;
       background: #67C23A;
     }
   }
@@ -1486,7 +1486,7 @@ export default {
     top: 0;
     left: 0;
     width: 4px;
-    height: 26px;
+    height: 33px;
     background: #67C23A;
   }
 }
@@ -1738,7 +1738,7 @@ export default {
     }
     .header {
       position: absolute;
-      top: 55px;
+      top: 45px;
       left: 1px;
       display: inline-block;
       margin-left: 5px;
@@ -2080,9 +2080,9 @@ export default {
       width: 100%;
       height: 100%;
       background: url('/static/image/b.png');
-      background-size: 470px 100%;
+      background-size: 351px 100%;
       background-repeat: no-repeat;
-      background-position: 5px -30px;
+      background-position: 5px 0;
       .basic-info {
         margin-top: 45px;
         width: 360px;
@@ -2125,6 +2125,7 @@ export default {
     .equipment-rank-wrapper {
       width: 100%;
       height: 100%;
+      margin-top: 10px;
       .equipment-info {
         width: 367px;
         li {
@@ -2170,6 +2171,7 @@ export default {
       height: 380px;
       display: flex;
       flex-direction: row;
+      margin-top: 10px;
       .hot-info {
         display: inline-block;
         width: 180px;
@@ -2292,6 +2294,7 @@ export default {
       position: relative;
       width: 100%;
       height: 100%;
+      top: 10px;
       background: url('/static/image/b.png');
       background-size: 90% 100%;
       background-repeat: no-repeat;

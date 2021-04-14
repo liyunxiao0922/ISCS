@@ -22,8 +22,8 @@
       </el-tree>
     </div>
     <div class="video-container">
-      <div v-for="item in 20" :key="item" class="video-wrapper">
-        <video muted width="99%" height="100%" autoplay="autoplay" loop :src="videoData[2]" controls style="border:none"></video>
+      <div v-for="item in videoData" :key="item" class="video-wrapper">
+        <video muted width="99%" height="100%" autoplay="autoplay" loop :src="item" controls style="border:none"></video>
       </div>
     </div>
   </div>
@@ -106,7 +106,28 @@ export default {
         children: 'children',
         label: 'label'
       },
-      videoData: ['http://121.40.128.159:24001/video/1.mp4', 'http://121.40.128.159:24001/video/2.mp4', 'http://121.40.128.159:24001/video/3.mp4', 'http://121.40.128.159:24001/video/4.mp4']
+      videoData: [
+        'http://121.40.128.159:24001/video/13.mp4',
+        'http://121.40.128.159:24001/video/2.mp4',
+        'http://121.40.128.159:24001/video/3.mp4',
+        'http://121.40.128.159:24001/video/4.mp4',
+        'http://121.40.128.159:24001/video/5.mp4',
+        'http://121.40.128.159:24001/video/6.mp4',
+        'http://121.40.128.159:24001/video/7.mp4',
+        'http://121.40.128.159:24001/video/8.mp4',
+        'http://121.40.128.159:24001/video/9.mp4',
+        'http://121.40.128.159:24001/video/10.mp4',
+        'http://121.40.128.159:24001/video/11.mp4',
+        'http://121.40.128.159:24001/video/12.mp4',
+        'http://121.40.128.159:24001/video/13.mp4',
+        'http://121.40.128.159:24001/video/14.mp4',
+        'http://121.40.128.159:24001/video/15.mp4',
+        'http://121.40.128.159:24001/video/16.mp4',
+        'http://121.40.128.159:24001/video/17.mp4',
+        'http://121.40.128.159:24001/video/18.mp4',
+        'http://121.40.128.159:24001/video/19.mp4',
+        'http://121.40.128.159:24001/video/20.mp4'
+      ]
     };
   },
   watch: {

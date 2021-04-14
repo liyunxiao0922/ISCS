@@ -72,9 +72,7 @@ export default {
       eventBus.$emit("status", this.value);
     },
     handleClick (val) {
-      console.log(val.path);
-      this.flag = Boolean(val.path === '/netMonitoring' ? 1 : 0);
-      console.log(this.flag);
+      this.value = this.flag = Boolean(val.path === '/netMonitoring' ? 1 : 0);
     },
     handleFullScreen () {
       console.log(1212);
@@ -104,20 +102,23 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 /deep/ .el-switch__core {
-  width: 35px !important;
-  height:16.5px;
+  width: 36px !important;
+  height: 16px;
 }
 /deep/ .el-switch__core:after {
   content: "";
   position: absolute;
   top: 0;
-  left: 1px;
-  border-radius: 100%;
+  border-radius: 50%;
   -webkit-transition: all .3s;
   transition: all .3s;
-  width: .625vw;
-  height: .625vw;
+  // width: .625vw;
+  width: 13px;
+  height:13px;
   background-color: #fff;
+}
+/deep/ .el-switch.is-checked .el-switch__core:after {
+  margin-left: -14px;
 }
 .head-container {
   position: absolute;
