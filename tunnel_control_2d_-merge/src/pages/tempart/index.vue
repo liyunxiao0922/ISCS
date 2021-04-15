@@ -69,16 +69,16 @@ export default {
       this.allData.currentType.indexOf(val) > -1 ? this.$message({message: '当前模块已存在', type: 'warning'}) : this.$emit('selectChange', val, this.ind);
     },
     handleExpand (val) {
-      console.log(val);
       if (val === 0 || val === 1 || val === 2) {
         this.$refs.content.style = 'display:block; width: 100%;';
         this.$refs.wrapper.style = 'width: 100%';
+        this.$refs.temWrapper.style = 'width: 375px;border-right: none; border-left: 1px solid rgb(88, 207, 255)';
         this.collapse = true;
         this.$emit('handlePos', {collapse: this.collapse, ind: val});
       } else if (val === 3 || val === 4 || val === 5) {
         this.$refs.content.style = 'display:block; height: 100%;';
         this.$refs.wrapper.style = 'height: 100%';
-        this.$refs.temWrapper.style = 'height: 100%;border-bottom: none; border-left: 1px solid rgb(88, 207, 255)';
+        this.$refs.temWrapper.style = 'height: 326px;border-bottom: none; border-left: 1px solid rgb(88, 207, 255)';
         this.collapse = true;
         this.$emit('handlePos', {collapse: this.collapse, ind: val});
       } else if (val === 6 || val === 7 || val === 8) {
@@ -201,8 +201,10 @@ export default {
   // }
   .wrapper {
     position: relative;
-    width: 100%;
-    height: 100%;
+    // width: 100%;
+    // height: 100%;
+    width: 375px;
+    height: 326px;
     .content {
       position: relative;
       width: 100%;

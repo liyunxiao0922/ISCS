@@ -2,15 +2,9 @@
   <div class="road-inspection-container">
     <mapGis :param="param" :mapData="mapData" v-if="mapData && mapData.highWayDot" :flag="flag" @handleChange="handleChange"></mapGis>
     <main>
-     <!-- <div class="content-wrapper" ref="content" v-if="flag">
-        <tempart @selectChange="selectChange" @handlePos="handlePos" :allData="allData"></tempart>
-      </div> -->
       <div class="content-wrapper" v-for="(item, ind) in arr" :key="item" ref="content" v-if="flag">
         <tempart :value="item" :ind="ind" @selectChange="selectChange" @handlePos="handlePos" :allData="allData"></tempart>
       </div>
-      <!-- <div class="content-wrapper" >
-        <tempart :value="arr" @selectChange="selectChange" draggable="false"></tempart>
-      </div> -->
       <el-dialog
         @open="handleOpen"
         :visible.sync="dialogVisible"
@@ -27,15 +21,11 @@
 </template>
 
 <script>
-// import faceRecognition from '../../pages/faceRecognition/index';
-// import securityCheck from '../../pages/security/index';
-// import droneInterception from '../../pages/drone/index';
 import tempart from '../../pages/tempart/index';
 import mapGis from '../../pages/drone/droneInterception';
 import { Login, equipMaintain, getPoints, equipChange } from '../../common/api/api';
 import Cookies from 'js-cookie';
 import eventBus from '../../common/Bus';
-// import centerPart from '../../pages/center/index';
 export default {
   data () {
     return {
@@ -128,25 +118,24 @@ export default {
       }
     },
     handlePos (param) {
-      console.log(param);
       this.param = param;
-      if (!param.collapse) {
-        if ([0, 1, 2].includes(param.ind)) {
-          this.$refs.content[param.ind].style = 'width: 10px;';
-        } else if ([3, 4, 5].includes(param.ind)) {
-          this.$refs.content[param.ind].style = 'height: 10px;border-left: none; border-bottom: 1px solid rgb(88, 207, 255)';
-        } else if ([6, 7, 8].includes(param.ind)) {
-          this.$refs.content[param.ind].style = 'width: 10px;border-left: none; border-right: 1px solid rgb(88, 207, 255)';
-        }
-      } else {
-        if ([0, 1, 2].includes(param.ind)) {
-          this.$refs.content[param.ind].style = 'display: block;width: 375px;';
-        } else if ([3, 4, 5].includes(param.ind)) {
-          this.$refs.content[param.ind].style = 'display: block;height: 326px;';
-        } else if ([6, 7, 8].includes(param.ind)) {
-          this.$refs.content[param.ind].style = 'display: block; width: 375px;';
-        }
-      }
+      // if (!param.collapse) {
+      //   if ([0, 1, 2].includes(param.ind)) {
+      //     this.$refs.content[param.ind].style = 'width: 10px;';
+      //   } else if ([3, 4, 5].includes(param.ind)) {
+      //     this.$refs.content[param.ind].style = 'transform:translateY(0);height: 10px;border-left: none; border-bottom: 1px solid rgb(88, 207, 255)';
+      //   } else if ([6, 7, 8].includes(param.ind)) {
+      //     this.$refs.content[param.ind].style = 'transform:translateY(365px);width: 10px;border-left: none; border-right: 1px solid rgb(88, 207, 255)';
+      //   }
+      // } else {
+      //   if ([0, 1, 2].includes(param.ind)) {
+      //     this.$refs.content[param.ind].style = 'display: block;width: 375px;';
+      //   } else if ([3, 4, 5].includes(param.ind)) {
+      //     this.$refs.content[param.ind].style = 'display: block;height: 326px;';
+      //   } else if ([6, 7, 8].includes(param.ind)) {
+      //     this.$refs.content[param.ind].style = 'display: block; width: 375px;';
+      //   }
+      // }
     },
     handleClose () {
       this.dialogVisible = false;
@@ -161,12 +150,8 @@ export default {
     }
   },
   components: {
-    // faceRecognition,
-    // securityCheck,
-    // droneInterception,
     mapGis,
     tempart
-    // centerPart
   }
 };
 </script>
@@ -227,8 +212,8 @@ export default {
     // }
     .content-wrapper {
       // cursor: move;
-      width: 375px;
-      height: 326.25px;
+      // width: 375px;
+      // height: 326.25px;
       position: absolute;
       margin-top: 30px;
       z-index: 999;
