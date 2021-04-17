@@ -14,7 +14,6 @@ import Cookies from 'js-cookie'
 const service = axios.create({
   baseURL: `http://121.40.128.159:24001/`, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 10000 // request timeout
 })
 
 var  reType = 1;
@@ -90,7 +89,6 @@ service.interceptors.response.use(
       Message({
         message: res.msg || 'Error',
         type: 'error',
-        duration: 5 * 1000
       })
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
@@ -116,7 +114,6 @@ service.interceptors.response.use(
     Message({
       message: error.msg,
       type: 'error',
-      duration: 5 * 1000
     })
     return Promise.reject(error)
   }
