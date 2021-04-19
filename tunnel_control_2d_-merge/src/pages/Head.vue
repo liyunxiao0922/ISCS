@@ -1,7 +1,7 @@
 <template>
   <div class="head-container">
     <div class="head-left">
-      <img src="../../static/image/logo-luqiao.png" alt="">
+      <img src="../../static/image/logo.png" alt="">
       <span class="title">智慧高速路段综合管控云平台</span>
       <!-- <span class="title">智慧高速云控平台</span> -->
     </div>
